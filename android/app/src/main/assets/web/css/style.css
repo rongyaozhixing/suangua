@@ -1218,3 +1218,51 @@ body::before {
   border-radius: 999px;
   vertical-align: 1px;
 }
+
+/* ===== 今日黄历 ===== */
+.hl-card { margin-bottom: 16px; }
+.hl-main { display: flex; flex-direction: column; gap: 7px; }
+.hl-line { display: flex; align-items: baseline; gap: 10px; font-size: 13.5px; line-height: 1.7; }
+.hl-label {
+  flex-shrink: 0;
+  width: 40px;
+  font-size: 12px;
+  color: var(--ink-dim);
+  letter-spacing: 1px;
+}
+.hl-daygz { font-weight: 700; color: var(--ink-strong); letter-spacing: 2px; }
+.hl-jc { font-weight: 700; letter-spacing: 1px; }
+.hl-jc.lv-ji { color: var(--cinnabar); }
+.hl-jc.lv-xiong { color: var(--ink-strong); }
+.hl-jc.lv-ping { color: var(--ink-dim); }
+.hl-yi { color: var(--cinnabar); }
+.hl-ji { color: var(--ink); }
+.hl-meta {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--ink-faint);
+  border-top: 1px dashed rgba(165, 133, 78, 0.4);
+  padding-top: 8px;
+}
+
+/* ===== 黄历建议（结果页） ===== */
+.hl-advice {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 10px 0;
+  padding: 10px 14px;
+  background: var(--gold-soft);
+  border: 1px solid rgba(165, 133, 78, 0.4);
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--ink);
+}
+.hl-advice-title {
+  flex-shrink: 0;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+.hl-ji-warn { color: var(--cinnabar); font-weight: 600; }

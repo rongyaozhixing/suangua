@@ -255,6 +255,7 @@
     wrap.innerHTML = `
       ${plainSummary(result, ask)}
       ${guaHeroBlock(result)}
+      ${huangliAdvice(result, ask)}
       ${askBlock(ask, result)}
       <div class="gong-grid">${cards}</div>
       ${baguaBlock(result)}
@@ -538,6 +539,32 @@
     });
   }
 
+  /** 今日黄历卡 */
+  function renderHuangli() {
+    const el = $('#daily-huangli');
+    if (!el || !window.Huangli) return;
+    const now = new Date();
+    const y = now.getFullYear(), m = now.getMonth() + 1, d = now.getDate();
+    const hl = window.Huangli.today(y, m, d);
+    let lu = null;
+    try { lu = L.solar2lunar(y, m, d); } catch (e) { /* 忽略 */ }
+    const fest = festivalName(lu);
+    const festHtml = fest ? `<span class="fest-badge">${fest}</span>` : '';
+    const lunarText = lu ? `农历${lu.monthCn}${lu.dayCn}${lu.yearGz ? ' · ' + lu.yearGz + '年' : ''}` : '';
+    const lvCls = hl.level === '吉' ? 'lv-ji' : hl.level === '凶' ? 'lv-xiong' : 'lv-ping';
+    el.innerHTML = `
+      <div class="daily-card hl-card">
+        <div class="daily-head">📜 今日黄历 · ${m}月${d}日 星期${hl.xingqi}${festHtml}</div>
+        <div class="hl-main">
+          <div class="hl-line"><span class="hl-label">干支日</span><span class="hl-daygz">${hl.dayGz}日</span></div>
+          <div class="hl-line"><span class="hl-label">建除</span><span class="hl-jc ${lvCls}">${hl.jianchu}日 · ${hl.level}</span></div>
+          <div class="hl-line"><span class="hl-label">宜</span><span class="hl-yi">${hl.yi.join('　')}</span></div>
+          <div class="hl-line"><span class="hl-label">忌</span><span class="hl-ji">${hl.ji.join('　')}</span></div>
+        </div>
+        <p class="hl-meta">${lunarText} · 黄历为传统民俗参考，简化推算</p>
+      </div>`;
+  }
+
   /** 结果页卦象大卡（占卜完直观显示本卦） */
   function guaHeroBlock(result) {
     const h = result.gongs.hour;
@@ -550,6 +577,38 @@
           <div class="gua-hero-line1"><span class="gua-hero-sym">${b.symbol}</span><span class="gua-hero-name">本卦 · ${b.gua}</span></div>
           <p class="gua-hero-duan">${b.duan}</p>
         </div>
+      </div>`;
+  }
+
+  /** 结果页黄历建议（卦象 × 今日黄历组合） */
+  function huangliAdvice(result, ask) {
+    if (!window.Huangli) return '';
+    const h = result.gongs.hour;
+    const now = new Date();
+    const hl = window.Huangli.today(now.getFullYear(), now.getMonth() + 1, now.getDate());
+    const gongLv = h ? (h.lucky === '吉' ? '吉' : h.lucky === '凶' ? '凶' : '平') : '平';
+    let tip;
+    if (gongLv === '吉' && hl.level === '吉') tip = '卦象与黄历俱佳，诸事可行，宜果断推进。';
+    else if (gongLv === '吉' && hl.level === '凶') tip = '卦象虽吉，然今日黄历欠佳，重要之事建议另择吉日。';
+    else if (gongLv === '吉') tip = '卦象吉利，黄历平平，宜稳中求进。';
+    else if (gongLv === '凶' && hl.level === '凶') tip = '卦象与黄历皆不理想，宜静守勿动、避锋敛锐。';
+    else if (gongLv === '凶') tip = '卦象欠佳，今日黄历亦非大吉，凡事三思而后行。';
+    else tip = '吉凶参半，黄历' + hl.level + '日，顺势而为即可。';
+
+    // 所问相关忌日提醒
+    const askJi = {
+      ganqing: ['嫁娶', '安床'], shiye: ['开市', '纳财', '出行'], caifu: ['开市', '纳财'],
+      xueye: ['出行'], chuxing: ['出行'], jiazhai: ['动土', '入宅'], shiwu: ['出行'],
+      guansi: ['词讼', '开市'], jiankang: ['求医', '出行']
+    };
+    const jiList = askJi[ask && ask.key] || [];
+    const hit = jiList.filter(x => hl.ji.includes(x));
+    const jiTip = hit.length ? `<span class="hl-ji-warn">（今日黄历忌【${hit.join('、')}】，所问之事建议避开或另择日）</span>` : '';
+
+    return `
+      <div class="hl-advice">
+        <span class="hl-advice-title">📜 今日黄历建议</span>
+        <span>${hl.dayGz}日 · ${hl.jianchu}日（${hl.level}）：${tip}${jiTip}</span>
       </div>`;
   }
 
@@ -702,7 +761,7 @@
     currentView = name;
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.getElementById('view-' + name).classList.add('active');
-    if (name === 'home') renderDailyGua();
+    if (name === 'home') { renderDailyGua(); renderHuangli(); }
     else if (name === 'history') renderHistory();
     else if (name === 'time' && !timeTouched) refreshTimeNow();   // 进入时间页自动定位当前时刻
     else if (['time', 'num', 'stroke', 'inspire'].includes(name)) ensureStaticPalm(name);
@@ -835,5 +894,6 @@
     initZhouyiTab();
     initSound();
     renderDailyGua();
+    renderHuangli();
   });
 })();
