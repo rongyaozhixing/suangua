@@ -1,6 +1,6 @@
 {
-  "versionCode": 104,
-  "versionName": "1.0.5",
-  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.0.5/app-release.apk",
-  "note": "内置离线版：不翻墙也能用，联网自动加载最新"
+  "versionCode": 105,
+  "versionName": "1.0.6",
+  "apkUrl": "https://xiaoliuren-app.oss-cn-beijing.aliyuncs.com/app-release.apk",
+  "note": "更新源切到国内 OSS：不翻墙也能自动更新"
 }

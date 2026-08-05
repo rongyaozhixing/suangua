@@ -40,7 +40,11 @@ public class MainActivity extends Activity {
 
     private static final String APP_URL = "https://rongyaozhixing.github.io/suangua/";
     private static final String LOCAL_URL = "file:///android_asset/web/index.html";
-    private static final String VERSION_URL = "https://rongyaozhixing.github.io/suangua/version.json";
+    // 更新源：OSS（国内直连，不翻墙）优先，GitHub 兜底
+    private static final String[] VERSION_URLS = {
+            "https://xiaoliuren-app.oss-cn-beijing.aliyuncs.com/version.json",
+            "https://rongyaozhixing.github.io/suangua/version.json"
+    };
     private static final String UPDATE_APK_NAME = "xiaoliuren-update.apk";
     private static final String PREFS = "xln_prefs";
     private static final String KEY_REMOTE_OK = "remote_ok";
@@ -50,6 +54,8 @@ public class MainActivity extends Activity {
     private TextView errorText;
     private ProgressBar progressBar;
     private long pendingDownloadId = -1;
+    private String pendingApkUrl = "";
+    private String latestVersionName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,21 +184,26 @@ public class MainActivity extends Activity {
         }).start();
     }
 
-    /** 联网检查版本，发现新版 → 弹窗提示 */
+    /** 联网检查版本（OSS 优先，GitHub 兜底），发现新版 → 弹窗提示 */
     private void checkUpdate() {
         new Thread(() -> {
-            try {
-                HttpURLConnection c = (HttpURLConnection) new URL(VERSION_URL).openConnection();
-                c.setConnectTimeout(8000);
-                c.setReadTimeout(8000);
-                c.setRequestProperty("Accept", "application/json");
-                int code = c.getResponseCode();
-                if (code == 200) {
+            for (String urlStr : VERSION_URLS) {
+                try {
+                    HttpURLConnection c = (HttpURLConnection) new URL(urlStr).openConnection();
+                    c.setConnectTimeout(6000);
+                    c.setReadTimeout(6000);
+                    c.setRequestProperty("Accept", "application/json");
+                    int code = c.getResponseCode();
+                    if (code != 200) {
+                        c.disconnect();
+                        continue;
+                    }
                     InputStream is = c.getInputStream();
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
                     byte[] buf = new byte[4096];
                     int n;
                     while ((n = is.read(buf)) != -1) bos.write(buf, 0, n);
+                    c.disconnect();
                     JSONObject o = new JSONObject(new String(bos.toByteArray(), "UTF-8"));
                     int remoteCode = o.getInt("versionCode");
                     String versionName = o.getString("versionName");
@@ -200,10 +211,12 @@ public class MainActivity extends Activity {
                     String note = o.optString("note", "");
                     int localCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
                     if (remoteCode > localCode) {
+                        latestVersionName = versionName;
                         runOnUiThread(() -> showUpdateDialog(versionName, note, apkUrl));
                     }
+                    break; // 任一源成功即结束
+                } catch (Exception ignored) {
                 }
-            } catch (Exception ignored) {
             }
         }).start();
     }
@@ -220,6 +233,7 @@ public class MainActivity extends Activity {
 
     private void downloadApk(String url) {
         try {
+            pendingApkUrl = url;
             DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
             DownloadManager.Request req = new DownloadManager.Request(Uri.parse(url));
             req.setTitle("小六壬占 更新");
@@ -251,6 +265,13 @@ public class MainActivity extends Activity {
             }
             if (status == DownloadManager.STATUS_SUCCESSFUL) {
                 installApk();
+            } else if (status == DownloadManager.STATUS_FAILED && pendingApkUrl.contains("oss-cn")
+                    && !latestVersionName.isEmpty()) {
+                // OSS 域名禁分发 APK（阿里云政策）→ 自动切 GitHub 备用源重试
+                String githubUrl = "https://github.com/rongyaozhixing/suangua/releases/download/v"
+                        + latestVersionName + "/app-release.apk";
+                Toast.makeText(MainActivity.this, "国内源受限，改用备用源下载…", Toast.LENGTH_LONG).show();
+                downloadApk(githubUrl);
             }
         }
     };
