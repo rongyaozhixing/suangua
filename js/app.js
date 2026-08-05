@@ -319,6 +319,7 @@
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.getElementById('view-' + name).classList.add('active');
     if (name === 'history') renderHistory();
+    else if (name === 'time' && !timeTouched) refreshTimeNow();   // 进入时间页自动定位当前时刻
     else if (name !== 'home') ensureStaticPalm(name);
     window.scrollTo(0, 0);
   }
@@ -522,65 +523,26 @@
   function initTimeTab() {
     const now = new Date();
     const ySel = $('#year-select'), mSel = $('#month-select'), dSel = $('#day-select');
-    let touched = false;   // 用户是否手动改过日期
 
     // 年（当前年前 60 年 ~ 后 40 年）
     const curY = now.getFullYear();
     let yOpts = '';
     for (let y = curY - 60; y <= curY + 40; y++) yOpts += `<option value="${y}">${y}年</option>`;
     ySel.innerHTML = yOpts;
-    ySel.value = String(curY);
-
-    // 月
     mSel.innerHTML = Array.from({ length: 12 }, (_, i) => `<option value="${i + 1}">${i + 1}月</option>`);
-    mSel.value = String(now.getMonth() + 1);
-
-    // 日（按当月天数填充）
-    function fillDays() {
-      const y = Number(ySel.value), m = Number(mSel.value);
-      const days = new Date(y, m, 0).getDate();
-      let opts = '';
-      for (let d = 1; d <= days; d++) opts += `<option value="${d}">${d}日</option>`;
-      dSel.innerHTML = opts;
-      const cur = Number(dSel.value);
-      dSel.value = (cur >= 1 && cur <= days) ? String(cur) : String(days);
-    }
-    fillDays();
-    dSel.value = String(now.getDate());
-
-    // 时辰
     $('#hour-select').innerHTML = X.SHICHEN.map((s, i) =>
       `<option value="${i + 1}">${s.name}时（${s.range}）</option>`).join('');
-    $('#hour-select').value = String(hourSeqFromDate(now));
 
-    // 农历预览
-    function updatePreview() {
-      try {
-        const lu = L.solar2lunar(Number(ySel.value), Number(mSel.value), Number(dSel.value));
-        $('#lunar-preview').textContent = `${lu.yearGz}年（${lu.zodiac}）· 农历${lu.monthCn}${lu.dayCn}`;
-      } catch (e) {
-        $('#lunar-preview').textContent = '';
-      }
-    }
+    refreshTimeNow();
 
-    ySel.addEventListener('change', () => { touched = true; fillDays(); updatePreview(); });
-    mSel.addEventListener('change', () => { touched = true; fillDays(); updatePreview(); });
-    dSel.addEventListener('change', () => { touched = true; updatePreview(); });
-
-    // 未手动改过 → 每次起卦前刷新为当天
-    function ensureToday() {
-      if (touched) return;
-      const t = new Date();
-      ySel.value = String(t.getFullYear());
-      mSel.value = String(t.getMonth() + 1);
-      fillDays();
-      dSel.value = String(t.getDate());
-      updatePreview();
-    }
-    updatePreview();
+    ySel.addEventListener('change', () => { timeTouched = true; updateTimePreview(); });
+    mSel.addEventListener('change', () => { timeTouched = true; updateTimePreview(); });
+    dSel.addEventListener('change', () => { timeTouched = true; updateTimePreview(); });
+    $('#hour-select').addEventListener('change', () => { timeTouched = true; });
+    $('#time-now').addEventListener('click', () => { timeTouched = false; refreshTimeNow(); });
 
     $('#time-submit').addEventListener('click', () => {
-      ensureToday();
+      if (!timeTouched) refreshTimeNow();   // 未手动改过 → 起卦自动取当下时刻
       const y = Number(ySel.value), m = Number(mSel.value), d = Number(dSel.value);
       const hourSeq = Number($('#hour-select').value);
       try {
@@ -593,6 +555,30 @@
         alert(e.message);
       }
     });
+  }
+
+  /** 自动定位到当前时刻（日期 + 时辰） */
+  let timeTouched = false;
+  function refreshTimeNow() {
+    const t = new Date();
+    const ySel = $('#year-select'), mSel = $('#month-select'), dSel = $('#day-select');
+    ySel.value = String(t.getFullYear());
+    mSel.value = String(t.getMonth() + 1);
+    const days = new Date(t.getFullYear(), t.getMonth() + 1, 0).getDate();
+    let opts = '';
+    for (let d = 1; d <= days; d++) opts += `<option value="${d}">${d}日</option>`;
+    dSel.innerHTML = opts;
+    dSel.value = String(t.getDate());
+    $('#hour-select').value = String(hourSeqFromDate(t));
+    updateTimePreview();
+  }
+  function updateTimePreview() {
+    try {
+      const lu = L.solar2lunar(Number($('#year-select').value), Number($('#month-select').value), Number($('#day-select').value));
+      $('#lunar-preview').textContent = `${lu.yearGz}年（${lu.zodiac}）· 农历${lu.monthCn}${lu.dayCn}`;
+    } catch (e) {
+      $('#lunar-preview').textContent = '';
+    }
   }
 
   function initNumTab() {

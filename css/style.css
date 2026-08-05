@@ -246,6 +246,20 @@ body::before {
   margin-bottom: 8px;
 }
 
+/* ===== 回到当前时刻 ===== */
+.btn-time-now {
+  margin-top: 8px;
+  padding: 8px 14px;
+  font-size: 12.5px;
+  background: none;
+  border: 1px dashed var(--ink-strong);
+  border-radius: 999px;
+  color: var(--ink-strong);
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-time-now:active { background: var(--ink-strong); color: var(--paper); }
+
 /* ===== 使用说明 ===== */
 .help-block {
   background: var(--card);

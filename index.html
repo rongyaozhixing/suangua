@@ -90,6 +90,7 @@
       <div class="field">
         <label for="hour-select">时辰</label>
         <select id="hour-select"></select>
+        <button class="btn-time-now" id="time-now">⏱ 回到当前时刻</button>
       </div>
       <button class="btn-primary" id="time-submit">起 卦</button>
       <div id="result-time" class="result"></div>
@@ -239,28 +240,20 @@
   <script src="js/palm.js"></script>
   <script src="js/app.js"></script>
   <script>
-    // Service Worker：离线缓存 + 新版本提示
+    // Service Worker：离线缓存 + 联网自动更新（发现新版本自动刷新，无需手动）
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./service-worker.js').then(function (reg) {
         reg.addEventListener('updatefound', function () {
           var sw = reg.installing;
           sw.addEventListener('statechange', function () {
             if (sw.state === 'installed' && navigator.serviceWorker.controller) {
-              var bar = document.getElementById('update-bar');
-              bar.classList.add('show');
+              // 新版本已就绪 → 自动刷新（联网时自动更新到最新版）
+              setTimeout(function () { window.location.reload(); }, 800);
             }
           });
         });
       }).catch(function () {});
-      navigator.serviceWorker.addEventListener('controllerchange', function () {
-        window.location.reload();
-      });
     }
-    document.getElementById('update-bar').addEventListener('click', function () {
-      var reg = navigator.serviceWorker && navigator.serviceWorker.getRegistration && navigator.serviceWorker.getRegistration();
-      if (reg) reg.update();
-      window.location.reload();
-    });
   </script>
 </body>
 </html>
