@@ -212,7 +212,8 @@ public class MainActivity extends Activity {
                     int localCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
                     if (remoteCode > localCode) {
                         latestVersionName = versionName;
-                        runOnUiThread(() -> showUpdateDialog(versionName, note, apkUrl));
+                        String lanzouUrl = o.optString("lanzouUrl", "");
+                        runOnUiThread(() -> showUpdateDialog(versionName, note, apkUrl, lanzouUrl));
                     }
                     break; // 任一源成功即结束
                 } catch (Exception ignored) {
@@ -221,14 +222,23 @@ public class MainActivity extends Activity {
         }).start();
     }
 
-    private void showUpdateDialog(String ver, String note, String url) {
+    private void showUpdateDialog(String ver, String note, String url, String lanzouUrl) {
         if (isFinishing()) return;
-        new AlertDialog.Builder(this)
+        AlertDialog.Builder b = new AlertDialog.Builder(this)
                 .setTitle("发现新版本 v" + ver)
-                .setMessage(note + "\n\n点击下载并安装更新。")
-                .setPositiveButton("立即更新", (d, w) -> downloadApk(url))
-                .setNegativeButton("暂不", null)
-                .show();
+                .setMessage(note + "\n\n选择下载方式安装更新。")
+                .setPositiveButton("直接下载", (d, w) -> downloadApk(url))
+                .setNegativeButton("暂不", null);
+        if (lanzouUrl != null && !lanzouUrl.isEmpty()) {
+            // 国内直连下载（蓝奏云），不翻墙可用
+            b.setNeutralButton("国内下载（蓝奏云）", (d, w) -> {
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(lanzouUrl)));
+                } catch (Exception ignored) {
+                }
+            });
+        }
+        b.show();
     }
 
     private void downloadApk(String url) {

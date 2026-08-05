@@ -1,6 +1,7 @@
 {
-  "versionCode": 105,
-  "versionName": "1.0.6",
-  "apkUrl": "https://xiaoliuren-app.oss-cn-beijing.aliyuncs.com/app-release.apk",
-  "note": "更新源切到国内 OSS：不翻墙也能自动更新"
+  "versionCode": 106,
+  "versionName": "1.0.7",
+  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.0.7/app-release.apk",
+  "lanzouUrl": "https://wwbtt.lanzoum.com/i30cQ40qusqf",
+  "note": "新增国内下载（蓝奏云），不翻墙也能更新"
 }
