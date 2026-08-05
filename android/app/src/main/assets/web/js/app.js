@@ -248,6 +248,7 @@
     wrap.className = 'result-wrap';
     wrap.innerHTML = `
       ${plainSummary(result, ask)}
+      ${guaHeroBlock(result)}
       ${askBlock(ask, result)}
       <div class="gong-grid">${cards}</div>
       ${baguaBlock(result)}
@@ -414,12 +415,12 @@
   const ZHOUYI = (typeof window !== 'undefined' && window.ZHOUYI) || [];
   const BAGUA_LINK = (typeof window !== 'undefined' && window.BAGUA_LINK) || {};
 
-  /** 卦画 SVG（bits 从下到上，1=阳 0=阴） */
+  /** 卦画 SVG（bits 从下到上，1=阳 0=阴；支持 3 爻/6 爻） */
   function guaSVG(bits, size) {
     const w = size || 120, h = size || 140;
-    const gap = h / 6;
+    const gap = h / bits.length;
     let bars = '';
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < bits.length; i++) {
       const y = h - (i + 0.5) * gap;  // 初爻在下
       const yang = bits[i] === '1';
       const bw = yang ? w * 0.9 : w * 0.42;
@@ -499,6 +500,21 @@
       </div>`;
     const more = el.querySelector('.daily-more');
     more.addEventListener('click', () => showView('zhouyi'));
+  }
+
+  /** 结果页卦象大卡（占卜完直观显示本卦） */
+  function guaHeroBlock(result) {
+    const h = result.gongs.hour;
+    if (!h || !BAGUA_LINK[h.name]) return '';
+    const b = BAGUA_LINK[h.name];
+    return `
+      <div class="gua-hero">
+        <div class="gua-hero-gua">${guaSVG(b.bits || '111', 88)}</div>
+        <div class="gua-hero-info">
+          <div class="gua-hero-line1"><span class="gua-hero-sym">${b.symbol}</span><span class="gua-hero-name">本卦 · ${b.gua}</span></div>
+          <p class="gua-hero-duan">${b.duan}</p>
+        </div>
+      </div>`;
   }
 
   /** 结果联动八卦（六宫五行 → 八卦） */

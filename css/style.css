@@ -1158,3 +1158,28 @@ body::before {
 
 /* 内容层在背景之上 */
 .app-header, .app-main { position: relative; z-index: 1; }
+
+/* ===== 卦象大卡（占卜结果） ===== */
+.gua-hero {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--card);
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  padding: 14px 18px;
+  margin: 12px 0;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
+.gua-hero-gua { flex-shrink: 0; }
+.gua-hero-info { flex: 1; }
+.gua-hero-line1 { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; }
+.gua-hero-sym { font-size: 26px; color: var(--cinnabar); }
+.gua-hero-name {
+  font-family: "Kaiti SC", "STKaiti", "Noto Serif SC", serif;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--ink-strong);
+}
+.gua-hero-duan { font-size: 13px; color: var(--ink-dim); line-height: 1.8; }
