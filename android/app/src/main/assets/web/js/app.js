@@ -227,11 +227,17 @@
       jiazhai: '家和万事兴，多顾念长辈。', qita: '顺势而为，平常心待之。'
     };
     const advice = adviceMap[ask && ask.key] || '顺势而为，平常心待之。';
+    // 关键信息：结果宫
+    const keyGong = g.hour;
+    const keyLine = keyGong
+      ? `<div class="key-box"><span class="key-label">🔑 关键</span><span>结果落「${keyGong.name}」（${keyGong.lucky}）${keyGong.keyword || ''}</span></div>`
+      : '';
     return `
       <div class="summary-card">
         <h3>所问${ask ? ' · ' + ask.name : ''} — 总体：<b class="ovr ${overall.indexOf('凶') >= 0 ? 'ovr-xiong' : overall.indexOf('吉') >= 0 ? 'ovr-ji' : ''}">${overall}</b></h3>
         <p class="summary-stage">${stage.join('，')}</p>
-        <p class="summary-advice">💡 建议：${advice}</p>
+        ${keyLine}
+        <p class="summary-advice">💡 <b>怎么做：</b>${advice}</p>
       </div>`;
   }
 
@@ -480,26 +486,56 @@
     return ZHOUYI[(days % 64 + 64) % 64];
   }
 
+  /** 农历节日（含除夕推算） */
+  function festivalName(lu) {
+    if (!lu) return '';
+    const map = {
+      '1-1': '春节', '1-15': '元宵节', '2-2': '龙抬头', '5-5': '端午节',
+      '7-7': '七夕节', '7-15': '中元节', '8-15': '中秋节', '9-9': '重阳节',
+      '12-8': '腊八节', '12-23': '北方小年', '12-24': '南方小年'
+    };
+    const f = map[lu.lunarMonth + '-' + lu.lunarDay];
+    if (f) return f;
+    // 除夕 = 腊月最后一天
+    if (lu.lunarMonth === 12) {
+      const info = (window.Lunar && window.Lunar.lunarInfo) || [];
+      const y = lu.lunarYear;
+      if (y >= 1900 && y <= 2100) {
+        const lastDay = (info[y - 1900] & (0x10000 >> 12)) ? 30 : 29;
+        if (lu.lunarDay === lastDay) return '除夕';
+      }
+    }
+    return '';
+  }
+
   function renderDailyGua() {
     const el = $('#daily-gua');
     if (!el || !ZHOUYI.length) return;
     const g = dailyGua();
     const now = new Date();
-    const pad = n => String(n).padStart(2, '0');
+    let lu = null;
+    try { lu = L.solar2lunar(now.getFullYear(), now.getMonth() + 1, now.getDate()); } catch (e) { /* 忽略 */ }
+    const fest = festivalName(lu);
+    const festHtml = fest ? `<span class="fest-badge">${fest}</span>` : '';
+    const lunarText = lu ? ` · 农历${lu.monthCn}${lu.dayCn}${lu.yearGz ? ' · ' + lu.yearGz + '年' : ''}` : '';
     el.innerHTML = `
       <div class="daily-card">
-        <div class="daily-head">今日卦象 · ${now.getMonth() + 1}月${now.getDate()}日</div>
+        <div class="daily-head">今日卦象 · ${now.getMonth() + 1}月${now.getDate()}日${lunarText}${festHtml}</div>
         <div class="daily-body">
           ${guaSVG(g.bits, 56)}
           <div class="daily-info">
             <span class="daily-name">${g.symbol} ${g.name}</span>
             <span class="daily-guaci">${g.guaci.slice(0, 30)}</span>
-            <button class="daily-more" data-id="${g.id}">查看全文 →</button>
+            <button class="daily-more" data-id="${g.id}">查看本卦详情 →</button>
           </div>
         </div>
       </div>`;
     const more = el.querySelector('.daily-more');
-    more.addEventListener('click', () => showView('zhouyi'));
+    more.addEventListener('click', () => {
+      // 直接显示当天的卦象详情（不是全部列表）
+      showView('zhouyi');
+      $('#zhouyi-detail').innerHTML = zhouyiDetailHTML(g);
+    });
   }
 
   /** 结果页卦象大卡（占卜完直观显示本卦） */

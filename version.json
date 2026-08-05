@@ -1,8 +1,8 @@
 {
-  "versionCode": 112,
-  "versionName": "1.1.3",
-  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.1.3/app-release.apk",
-  "lanzouUrl": "https://wwbtt.lanzoum.com/iaoBr40qz54f",
-  "lanzouPwd": "avng",
-  "note": "占卜结果顶部新增卦象大卡（卦画+卦名+象征）"
+  "versionCode": 113,
+  "versionName": "1.1.4",
+  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.1.4/app-release.apk",
+  "lanzouUrl": "https://wwbtt.lanzoum.com/iUTqD40r0jsj",
+  "lanzouPwd": "a8em",
+  "note": "结果页标关键+做法清楚；今日卦显示农历节日；点进本卦详情"
 }
