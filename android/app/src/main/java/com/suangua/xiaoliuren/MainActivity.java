@@ -219,7 +219,8 @@ public class MainActivity extends Activity {
                     if (remoteCode > localCode) {
                         latestVersionName = versionName;
                         String lanzouUrl = o.optString("lanzouUrl", "");
-                        runOnUiThread(() -> showUpdateDialog(versionName, note, apkUrl, lanzouUrl));
+                        String lanzouPwd = o.optString("lanzouPwd", "");
+                        runOnUiThread(() -> showUpdateDialog(versionName, note, apkUrl, lanzouUrl, lanzouPwd));
                     }
                     break; // 任一源成功即结束
                 } catch (Exception ignored) {
@@ -228,11 +229,13 @@ public class MainActivity extends Activity {
         }).start();
     }
 
-    private void showUpdateDialog(String ver, String note, String url, String lanzouUrl) {
+    private void showUpdateDialog(String ver, String note, String url, String lanzouUrl, String lanzouPwd) {
         if (isFinishing()) return;
+        String pwdHint = (lanzouPwd != null && !lanzouPwd.isEmpty())
+                ? "\n\n（蓝奏云提取码：" + lanzouPwd + "）" : "";
         AlertDialog.Builder b = new AlertDialog.Builder(this)
                 .setTitle("发现新版本 v" + ver)
-                .setMessage(note + "\n\n选择下载方式安装更新。")
+                .setMessage(note + "\n\n选择下载方式安装更新。" + pwdHint)
                 .setPositiveButton("直接下载", (d, w) -> downloadApk(url))
                 .setNegativeButton("暂不", null);
         if (lanzouUrl != null && !lanzouUrl.isEmpty()) {

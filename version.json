@@ -1,7 +1,8 @@
 {
-  "versionCode": 109,
-  "versionName": "1.1.0",
-  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.1.0/app-release.apk",
-  "lanzouUrl": "https://wwbtt.lanzoum.com/iPKwK40qxm5g",
-  "note": "新增周易六十四卦查询+八卦联动+每日一卦"
+  "versionCode": 110,
+  "versionName": "1.1.1",
+  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.1.1/app-release.apk",
+  "lanzouUrl": "https://wwbtt.lanzoum.com/ifwdr40qxw9a",
+  "lanzouPwd": "anuc",
+  "note": "更新弹窗显示蓝奏云提取码，下载不再卡密码"
 }
