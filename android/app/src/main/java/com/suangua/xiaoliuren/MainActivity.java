@@ -140,7 +140,13 @@ public class MainActivity extends Activity {
         loadUrl();
 
         // 启动时检查软件更新（后台线程，不阻塞页面加载）
-        registerReceiver(downloadReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+        // Android 14+ 动态注册必须带 flag，否则抛 SecurityException 闪退
+        IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+        if (android.os.Build.VERSION.SDK_INT >= 33) {
+            registerReceiver(downloadReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
+        } else {
+            registerReceiver(downloadReceiver, filter);
+        }
         checkUpdate();
     }
 
