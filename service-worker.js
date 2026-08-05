@@ -2,7 +2,7 @@
  * service-worker.js — 小六壬占 离线缓存 + 新版本提示
  * 版本号修改处：BUILD_VER。改动内容后务必递增版本并更新缓存。
  */
-const BUILD_VER = '1.0.2';
+const BUILD_VER = '1.0.3';
 const CACHE_NAME = 'xln-cache-' + BUILD_VER;
 
 const PRECACHE = [
@@ -14,6 +14,7 @@ const PRECACHE = [
   './js/palm.js',
   './js/lunar.js',
   './js/xiaoliuren.js',
+  './js/strokes-data.js',
   './js/paipan.js',
   './assets/hand-left-clean.jpg',
   './assets/jiugong-ref.jpg'
