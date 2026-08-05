@@ -277,6 +277,54 @@ body::before {
 }
 .btn-time-now:active { background: var(--ink-strong); color: var(--paper); }
 
+/* ===== 周易六十四卦 ===== */
+.daily-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+.daily-head { font-size: 12px; color: var(--ink-dim); letter-spacing: 1px; margin-bottom: 8px; }
+.daily-body { display: flex; align-items: center; gap: 14px; }
+.daily-info { display: flex; flex-direction: column; gap: 4px; }
+.daily-name { font-size: 17px; font-weight: 700; color: var(--ink-strong); }
+.daily-guaci { font-size: 12.5px; color: var(--ink-dim); }
+.daily-more { align-self: flex-start; font-size: 12px; background: none; border: none; color: var(--ink-strong); padding: 0; cursor: pointer; font-family: inherit; text-decoration: underline; }
+
+.zhouyi-list { display: grid; gap: 8px; }
+.zy-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  padding: 9px 12px;
+  cursor: pointer;
+}
+.zy-item:active { background: rgba(17, 17, 17, 0.06); }
+.zy-item-sym { font-size: 20px; }
+.zy-item-name { font-size: 14px; font-weight: 600; color: var(--ink-strong); min-width: 110px; }
+.zy-item-guaci { font-size: 12px; color: var(--ink-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+
+.zhouyi-detail { margin-bottom: 14px; }
+.zhouyi-detail-card {
+  background: var(--card);
+  border: 1.5px solid var(--ink-strong);
+  border-radius: 14px;
+  padding: 16px;
+}
+.zy-head { display: flex; align-items: center; gap: 16px; }
+.zy-symbol { font-size: 44px; }
+.zy-head h3 { font-size: 18px; color: var(--ink-strong); margin-bottom: 6px; }
+.gua-svg { display: block; }
+.zy-guaci { font-size: 14.5px; color: var(--ink); line-height: 1.9; margin: 12px 0 4px; }
+.zy-yao { border-top: 1px dashed var(--line); margin-top: 10px; padding-top: 8px; }
+.zy-yao .gong-detail { margin: 0; line-height: 1.9; font-size: 13.5px; }
+
+.bagua-card { border-color: var(--ink-strong); }
+
 /* ===== 使用说明 ===== */
 .help-block {
   background: var(--card);

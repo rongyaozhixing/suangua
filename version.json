@@ -1,7 +1,7 @@
 {
-  "versionCode": 108,
-  "versionName": "1.0.9",
-  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.0.9/app-release.apk",
-  "lanzouUrl": "https://wwbtt.lanzoum.com/ihWqq40qwaeh",
-  "note": "修复 Android 14+ 闪退（广播注册 flag）"
+  "versionCode": 109,
+  "versionName": "1.1.0",
+  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.1.0/app-release.apk",
+  "lanzouUrl": "https://wwbtt.lanzoum.com/iPKwK40qxm5g",
+  "note": "新增周易六十四卦查询+八卦联动+每日一卦"
 }

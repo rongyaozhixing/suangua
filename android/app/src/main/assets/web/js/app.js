@@ -250,6 +250,7 @@
       ${plainSummary(result, ask)}
       ${askBlock(ask, result)}
       <div class="gong-grid">${cards}</div>
+      ${baguaBlock(result)}
       ${synthesis(result)}
       ${jingjieBlock(result)}
       ${yongshenBlock()}
@@ -389,6 +390,109 @@
     });
   }
 
+  // ============ 周易六十四卦 ============
+  const ZHOUYI = (typeof window !== 'undefined' && window.ZHOUYI) || [];
+  const BAGUA_LINK = (typeof window !== 'undefined' && window.BAGUA_LINK) || {};
+
+  /** 卦画 SVG（bits 从下到上，1=阳 0=阴） */
+  function guaSVG(bits, size) {
+    const w = size || 120, h = size || 140;
+    const gap = h / 6;
+    let bars = '';
+    for (let i = 0; i < 6; i++) {
+      const y = h - (i + 0.5) * gap;  // 初爻在下
+      const yang = bits[i] === '1';
+      const bw = yang ? w * 0.9 : w * 0.42;
+      const x = (w - bw) / 2;
+      bars += `<rect x="${x}" y="${y - gap * 0.22}" width="${bw}" height="${gap * 0.44}" rx="2" fill="#111111"/>`;
+    }
+    return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" class="gua-svg">${bars}</svg>`;
+  }
+
+  function zhouyiDetailHTML(g) {
+    const yaos = g.yao.map(y => `<p class="gong-detail">${y}</p>`).join('');
+    const special = (g.special && g.special.length) ? `<p class="gong-detail">${g.special.join('　')}</p>` : '';
+    return `
+      <div class="zhouyi-detail-card">
+        <div class="zy-head">
+          <span class="zy-symbol">${g.symbol}</span>
+          <div>
+            <h3>${g.id}. ${g.name}</h3>
+            ${guaSVG(g.bits, 90)}
+          </div>
+        </div>
+        <p class="zy-guaci">【卦辞】${g.name.split('为')[0]}：${g.guaci}</p>
+        <div class="zy-yao">${yaos}${special}</div>
+      </div>`;
+  }
+
+  function initZhouyiTab() {
+    const list = $('#zhouyi-list');
+    const detail = $('#zhouyi-detail');
+    const search = $('#zhouyi-search');
+
+    function render(filter) {
+      const kw = (filter || '').trim();
+      const items = ZHOUYI.filter(g => !kw || g.name.includes(kw) || g.guaci.includes(kw)
+        || g.yao.some(y => y.includes(kw)) || (g.special || []).some(y => y.includes(kw)));
+      list.innerHTML = items.map(g => `
+        <div class="zy-item" data-id="${g.id}">
+          <span class="zy-item-sym">${g.symbol}</span>
+          <span class="zy-item-name">${g.id}. ${g.name}</span>
+          <span class="zy-item-guaci">${g.guaci.slice(0, 18)}…</span>
+        </div>`).join('');
+      list.querySelectorAll('.zy-item').forEach(el => {
+        el.addEventListener('click', () => {
+          const g = ZHOUYI.find(x => x.id === Number(el.dataset.id));
+          detail.innerHTML = zhouyiDetailHTML(g);
+          detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+    }
+    render('');
+    search.addEventListener('input', () => render(search.value));
+  }
+
+  /** 每日一卦（按日期序数取卦） */
+  function dailyGua() {
+    const days = Math.floor(Date.now() / 86400000);
+    return ZHOUYI[(days % 64 + 64) % 64];
+  }
+
+  function renderDailyGua() {
+    const el = $('#daily-gua');
+    if (!el || !ZHOUYI.length) return;
+    const g = dailyGua();
+    const now = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    el.innerHTML = `
+      <div class="daily-card">
+        <div class="daily-head">今日卦象 · ${now.getMonth() + 1}月${now.getDate()}日</div>
+        <div class="daily-body">
+          ${guaSVG(g.bits, 56)}
+          <div class="daily-info">
+            <span class="daily-name">${g.symbol} ${g.name}</span>
+            <span class="daily-guaci">${g.guaci.slice(0, 30)}</span>
+            <button class="daily-more" data-id="${g.id}">查看全文 →</button>
+          </div>
+        </div>
+      </div>`;
+    const more = el.querySelector('.daily-more');
+    more.addEventListener('click', () => showView('zhouyi'));
+  }
+
+  /** 结果联动八卦（六宫五行 → 八卦） */
+  function baguaBlock(result) {
+    const h = result.gongs.hour;
+    if (!h || !BAGUA_LINK[h.name]) return '';
+    const b = BAGUA_LINK[h.name];
+    return `
+      <div class="synth-card bagua-card">
+        <h3>八卦参考 · ${b.symbol} ${b.gua}（${b.wx}）</h3>
+        <p class="synth-main">${b.duan}</p>
+      </div>`;
+  }
+
   // ============ 命盘排盘 ============
   let panGender = '男';
 
@@ -526,9 +630,10 @@
     currentView = name;
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.getElementById('view-' + name).classList.add('active');
-    if (name === 'history') renderHistory();
+    if (name === 'home') renderDailyGua();
+    else if (name === 'history') renderHistory();
     else if (name === 'time' && !timeTouched) refreshTimeNow();   // 进入时间页自动定位当前时刻
-    else if (name !== 'home') ensureStaticPalm(name);
+    else if (['time', 'num', 'stroke', 'inspire'].includes(name)) ensureStaticPalm(name);
     window.scrollTo(0, 0);
   }
 
@@ -655,5 +760,7 @@
     initInspireTab();
     initHistory();
     initPaipanTab();
+    initZhouyiTab();
+    renderDailyGua();
   });
 })();
