@@ -1,0 +1,45 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.suangua.xiaoliuren'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.suangua.xiaoliuren"
+        minSdk 21
+        targetSdk 34
+        versionCode 101
+        versionName "1.0.1"
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('app.keystore')
+            storePassword 'xiaoliuren123'
+            keyAlias 'xiaoliuren'
+            keyPassword 'xiaoliuren123'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lint {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+}
+
+dependencies {
+    // 纯 WebView 壳，无第三方依赖
+}
