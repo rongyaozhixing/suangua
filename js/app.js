@@ -315,13 +315,10 @@
   }
 
   function showView(name) {
-    currentView = name;
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    document.getElementById('view-' + name).classList.add('active');
-    if (name === 'history') renderHistory();
-    else if (name === 'time' && !timeTouched) refreshTimeNow();   // 进入时间页自动定位当前时刻
-    else if (name !== 'home') ensureStaticPalm(name);
-    window.scrollTo(0, 0);
+    setActiveView(name);
+    if (name !== 'home') {
+      history.pushState({ view: name }, '', '#' + name);
+    }
   }
 
   // ============ 历史记录（localStorage） ============
@@ -504,9 +501,34 @@
     document.querySelectorAll('[data-view]').forEach(card => {
       card.addEventListener('click', () => showView(card.dataset.view));
     });
+    // ‹ 返回按钮：走浏览器历史（手机返回键一致地退回上一步）
     document.querySelectorAll('.btn-back').forEach(btn => {
-      btn.addEventListener('click', () => showView(btn.dataset.back));
+      btn.addEventListener('click', () => {
+        if (history.state && history.state.view && history.state.view !== 'home') {
+          history.back();
+        } else {
+          showView(btn.dataset.back);
+        }
+      });
     });
+    // 手机/浏览器返回键 → 退回上一步（SPA 视图切换记入历史）
+    window.addEventListener('popstate', (e) => {
+      const v = (e.state && e.state.view) || 'home';
+      setActiveView(v);
+    });
+    // 初始状态：首页不产生历史（首页再按返回即退出）
+    history.replaceState({ view: 'home' }, '', location.pathname + location.search);
+  }
+
+  /** 仅切换显示（不记历史） */
+  function setActiveView(name) {
+    currentView = name;
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-' + name).classList.add('active');
+    if (name === 'history') renderHistory();
+    else if (name === 'time' && !timeTouched) refreshTimeNow();   // 进入时间页自动定位当前时刻
+    else if (name !== 'home') ensureStaticPalm(name);
+    window.scrollTo(0, 0);
   }
 
   /** 所问何事选择器 */
