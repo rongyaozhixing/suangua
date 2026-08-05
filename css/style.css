@@ -246,6 +246,23 @@ body::before {
   margin-bottom: 8px;
 }
 
+/* ===== 手掌图降级（图片加载失败时） ===== */
+.palm-fallback {
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 14px;
+  color: var(--ink-strong);
+  line-height: 2.2;
+  letter-spacing: 1px;
+  background: var(--card);
+  border: 1px dashed var(--line);
+  border-radius: 14px;
+  padding: 20px;
+}
+
 /* ===== 回到当前时刻 ===== */
 .btn-time-now {
   margin-top: 8px;

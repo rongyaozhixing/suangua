@@ -2,7 +2,7 @@
  * service-worker.js — 小六壬占 离线缓存 + 新版本提示
  * 版本号修改处：BUILD_VER。改动内容后务必递增版本并更新缓存。
  */
-const BUILD_VER = '1.0.3';
+const BUILD_VER = '1.0.4';
 const CACHE_NAME = 'xln-cache-' + BUILD_VER;
 
 const PRECACHE = [
@@ -53,6 +53,18 @@ self.addEventListener('fetch', (e) => {
   }
   e.respondWith(
     caches.match(e.request).then((hit) => {
+      const isImage = /\.(jpe?g|png|gif|webp|svg|ico)(\?|$)/i.test(url.pathname);
+      if (isImage) {
+        // 图片走网络优先（保证拿到最新图），失败回退缓存
+        return fetch(e.request).then((res) => {
+          if (res && res.ok) {
+            const copy = res.clone();
+            caches.open(CACHE_NAME).then((c) => c.put(e.request, copy));
+          }
+          return res;
+        }).catch(() => hit);
+      }
+      // 其他静态资源缓存优先
       const net = fetch(e.request).then((res) => {
         if (res && res.ok) {
           const copy = res.clone();

@@ -70,9 +70,27 @@
         <p class="palm-counter">心存一念 · 从大安起</p>
       </div>`;
     const box = container.querySelector('.palm-photo-box');
+    const img = container.querySelector('.palm-photo');
     const counter = container.querySelector('.palm-counter');
     const spots = [...container.querySelectorAll('.spot')];
     const cursor = container.querySelector('.cursor-dot');
+
+    // 图片加载失败 → 降级为文字版掌诀，保证功能可用
+    img.onerror = function () {
+      this.style.display = 'none';
+      const layer = container.querySelector('.spots-layer');
+      const ring = container.querySelector('.rings-layer');
+      if (layer) layer.style.display = 'none';
+      if (ring) ring.style.display = 'none';
+      if (box && !box.querySelector('.palm-fallback')) {
+        const fb = document.createElement('div');
+        fb.className = 'palm-fallback';
+        fb.textContent = is9
+          ? '九宫掌诀：食指 留连·大安·桃花 ／ 中指 速喜·空亡·小吉 ／ 无名指 病符·赤口·天德'
+          : '六宫掌诀：食指根大安 · 食指尖留连 · 中指尖速喜 · 无名指尖赤口 · 无名指根小吉 · 中指根空亡';
+        box.insertBefore(fb, box.firstChild);
+      }
+    };
 
     let timers = [];
     let currentSeq = 1;
