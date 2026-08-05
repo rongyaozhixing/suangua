@@ -317,7 +317,8 @@
   function showView(name) {
     setActiveView(name);
     if (name !== 'home') {
-      history.pushState({ view: name }, '', '#' + name);
+      // file://（内置离线版）下 pushState 可能抛 SecurityError，静默降级
+      try { history.pushState({ view: name }, '', '#' + name); } catch (e) { /* 忽略 */ }
     }
   }
 
@@ -516,8 +517,8 @@
       const v = (e.state && e.state.view) || 'home';
       setActiveView(v);
     });
-    // 初始状态：首页不产生历史（首页再按返回即退出）
-    history.replaceState({ view: 'home' }, '', location.pathname + location.search);
+    // 初始状态：首页不产生历史（首页再按返回即退出）；file:// 下失败则静默
+    try { history.replaceState({ view: 'home' }, '', location.pathname + location.search); } catch (e) { /* 忽略 */ }
   }
 
   /** 仅切换显示（不记历史） */
