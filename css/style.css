@@ -1,17 +1,21 @@
-/* ===== 小六壬占 · 水墨太极 UI（黑白） ===== */
+/* ===== 小六壬占 · 国潮水墨 UI ===== */
 :root {
-  --bg: #f5f0e6;            /* 宣纸白 */
-  --bg-soft: #ede6d7;
-  --card: rgba(255, 255, 255, 0.82);
-  --ink: #191919;           /* 墨黑 */
-  --ink-strong: #000;
-  --ink-dim: #6e685c;       /* 灰 */
-  --ink-faint: #a49d8e;
-  --line: rgba(25, 25, 25, 0.16);
-  --line-strong: rgba(25, 25, 25, 0.55);
-  --paper: #faf7f0;
-  --ji: #111;               /* 吉·黑 */
-  --xiong: #8a8578;         /* 凶·灰 */
+  --bg: #f3ecdc;            /* 宣纸黄白 */
+  --bg-soft: #e9e0cc;
+  --card: rgba(255, 253, 248, 0.88);
+  --ink: #1c1a16;           /* 墨黑 */
+  --ink-strong: #111;
+  --ink-dim: #6f6755;       /* 灰褐 */
+  --ink-faint: #a79e88;
+  --line: rgba(28, 26, 22, 0.14);
+  --line-strong: rgba(28, 26, 22, 0.5);
+  --paper: #faf6ec;
+  --ji: #111;
+  --xiong: #8a8578;
+  --cinnabar: #b23a2e;      /* 朱砂 */
+  --cinnabar-soft: rgba(178, 58, 46, 0.12);
+  --gold: #a5854e;          /* 淡金 */
+  --gold-soft: rgba(165, 133, 78, 0.18);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -19,8 +23,10 @@
 body {
   font-family: "PingFang SC", "Microsoft YaHei", "Noto Serif SC", serif;
   background:
-    radial-gradient(900px 420px at 50% -8%, rgba(25, 25, 25, 0.05) 0%, transparent 62%),
-    linear-gradient(180deg, #faf6ed 0%, var(--bg) 100%);
+    radial-gradient(900px 420px at 50% -8%, rgba(28, 26, 22, 0.05) 0%, transparent 62%),
+    radial-gradient(420px 300px at 88% 12%, rgba(165, 133, 78, 0.10) 0%, transparent 70%),
+    radial-gradient(380px 300px at 8% 88%, rgba(178, 58, 46, 0.05) 0%, transparent 70%),
+    linear-gradient(180deg, #faf4e6 0%, var(--bg) 100%);
   color: var(--ink);
   min-height: 100vh;
   max-width: 480px;
@@ -45,11 +51,11 @@ body::before {
   z-index: 0;
 }
 
-/* ===== 头部 ===== */
+/* ===== 头部（国潮） ===== */
 .app-header {
   position: relative;
   text-align: center;
-  padding: 34px 16px 20px;
+  padding: 30px 16px 22px;
   overflow: hidden;
 }
 .app-header::after {
@@ -57,27 +63,31 @@ body::before {
   position: absolute;
   left: 50%; bottom: 0;
   transform: translateX(-50%);
-  width: 70%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--ink-strong), transparent);
+  width: 72%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--cinnabar), var(--gold), transparent);
+  opacity: 0.55;
 }
+.app-header .header-inner { position: relative; z-index: 1; }
 .app-header .mark {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 56px; height: 56px;
+  width: 58px; height: 58px;
   border-radius: 50%;
-  border: 1px solid var(--line-strong);
   background: var(--paper);
+  border: 2px solid var(--cinnabar);
   margin-bottom: 12px;
-  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.10);
+  box-shadow: 0 0 0 4px var(--cinnabar-soft), 0 3px 16px rgba(0, 0, 0, 0.12);
 }
-.app-header h1 {
-  font-size: 32px;
+.app-header .app-title {
+  font-family: "Kaiti SC", "STKaiti", "KaiTi", "Noto Serif SC", serif;
+  font-size: 36px;
   letter-spacing: 14px;
   text-indent: 14px;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--ink-strong);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.6);
 }
 .app-header .subtitle {
   margin-top: 9px;
@@ -87,10 +97,52 @@ body::before {
   text-indent: 7px;
 }
 .app-header .gua-line {
-  margin-top: 9px;
-  font-size: 11px;
+  margin-top: 10px;
+  font-size: 12px;
   color: var(--ink-faint);
+  letter-spacing: 3px;
+}
+.app-header .gua-line span { margin: 0 3px; }
+.app-header .gua-line .gua-dot { color: var(--cinnabar); }
+
+/* ===== 首页 hero（国潮） ===== */
+.home-hero {
+  position: relative;
+  text-align: center;
+  padding: 14px 10px 18px;
+}
+.home-hero .chop {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Kaiti SC", "STKaiti", serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--paper);
+  background: var(--cinnabar);
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.35), 0 2px 8px rgba(178,58,46,0.4);
+  transform: rotate(-6deg);
+}
+.home-hero .hero-title {
+  font-family: "Kaiti SC", "STKaiti", "Noto Serif SC", serif;
+  font-size: 24px;
+  font-weight: 700;
   letter-spacing: 4px;
+  color: var(--ink-strong);
+}
+.home-hero .hero-title em { color: var(--cinnabar); font-style: normal; margin: 0 4px; }
+.home-hero .hero-sub {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--ink-dim);
+  letter-spacing: 5px;
+  text-indent: 5px;
 }
 
 /* ===== 主体 ===== */
@@ -175,18 +227,32 @@ body::before {
   font-family: inherit;
   text-align: left;
   color: var(--ink);
-  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.07), inset 0 0 0 0 transparent;
+  position: relative;
+  overflow: hidden;
   transition: transform 0.12s ease, border-color .2s, box-shadow .2s;
 }
-.method-card:active { transform: scale(0.975); border-color: var(--ink-strong); }
+/* 卡片左上角金色小角标 */
+.method-card::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0;
+  width: 26px; height: 26px;
+  border-left: 3px solid var(--gold);
+  border-top: 3px solid var(--gold);
+  border-top-left-radius: 16px;
+  opacity: 0.6;
+}
+.method-card:active { transform: scale(0.975); border-color: var(--cinnabar); }
 .mc-icon {
   font-size: 22px;
-  width: 40px; height: 40px;
+  width: 42px; height: 42px;
   display: flex; align-items: center; justify-content: center;
-  background: rgba(25, 25, 25, 0.06);
+  background: var(--cinnabar-soft);
+  border: 1px solid rgba(178, 58, 46, 0.25);
   border-radius: 12px;
 }
-.mc-name { font-size: 18px; font-weight: 700; letter-spacing: 3px; color: var(--ink-strong); }
+.mc-name { font-size: 18px; font-weight: 700; letter-spacing: 3px; color: var(--ink-strong); font-family: "Kaiti SC", "STKaiti", "Noto Serif SC", serif; }
 .mc-desc { font-size: 12.5px; color: var(--ink-dim); letter-spacing: 1px; }
 .hint.center { text-align: center; }
 
@@ -872,3 +938,223 @@ body::before {
   transition: color .2s, border-color .2s;
 }
 .btn-skip:active { border-color: var(--ink-strong); color: var(--ink-strong); }
+
+/* ===== 国潮增强（覆盖统一风格） ===== */
+.btn-primary {
+  width: 100%;
+  padding: 15px;
+  font-size: 17px;
+  letter-spacing: 8px;
+  text-indent: 8px;
+  font-family: "Kaiti SC", "STKaiti", "Noto Serif SC", serif;
+  font-weight: 700;
+  color: var(--paper);
+  background: linear-gradient(135deg, #2b2722 0%, #171512 55%, #000 100%);
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255,255,255,0.12);
+  transition: transform .12s ease, box-shadow .2s;
+}
+.btn-primary:active {
+  transform: scale(0.975);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  background: linear-gradient(135deg, var(--cinnabar) 0%, #8f2d22 100%);
+}
+
+/* 输入控件：墨线风格 */
+select, input[type="text"], input[type="number"] {
+  background: rgba(255, 253, 248, 0.75);
+  border: 1px solid var(--line);
+  border-bottom: 2px solid rgba(28, 26, 22, 0.35);
+  border-radius: 10px;
+  padding: 11px 12px;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  width: 100%;
+  outline: none;
+  transition: border-color .2s;
+}
+select:focus, input:focus { border-bottom-color: var(--cinnabar); }
+
+/* 版本切换：水墨 pill */
+.seg {
+  display: flex;
+  background: rgba(28, 26, 22, 0.06);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px;
+}
+.seg-btn {
+  flex: 1;
+  padding: 9px 0;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  font-family: "Kaiti SC", "STKaiti", serif;
+  font-size: 15px;
+  letter-spacing: 4px;
+  text-indent: 4px;
+  color: var(--ink-dim);
+  cursor: pointer;
+  transition: background .2s, color .2s, box-shadow .2s;
+}
+.seg-btn.active {
+  background: linear-gradient(135deg, #2b2722, #000);
+  color: var(--paper);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* 卡片：金边统一 */
+.gong-card, .synth-card, .summary-card, .hist-item, .extra-card, .help-block, .zhouyi-detail-card, .daily-card {
+  border-color: rgba(165, 133, 78, 0.35) !important;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+.synth-card { border: 1.5px solid var(--gold) !important; }
+
+/* 结果页标题：书法体 */
+.synth-card h3, .gong-card h3, .summary-card h3, .pan-title, .zy-head h3, .daily-name {
+  font-family: "Kaiti SC", "STKaiti", "Noto Serif SC", serif;
+}
+
+/* 免责声明小印章感 */
+.disclaimer {
+  text-align: center;
+  font-size: 11px;
+  color: var(--ink-faint);
+  letter-spacing: 1px;
+  margin-top: 18px;
+  padding: 8px 12px;
+  border-top: 1px dashed rgba(165, 133, 78, 0.5);
+}
+
+/* ===== 声音开关（国潮） ===== */
+.sound-toggle {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  z-index: 5;
+  width: 38px; height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  background: var(--paper);
+  border: 1px solid rgba(165, 133, 78, 0.5);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== 入场动画（国潮） ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.92); }
+  60% { transform: scale(1.02); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.view.active > * { animation: fadeUp 0.45s ease both; }
+.view.active > *:nth-child(2) { animation-delay: 0.05s; }
+.view.active > *:nth-child(3) { animation-delay: 0.10s; }
+.view.active > *:nth-child(4) { animation-delay: 0.15s; }
+.view.active > *:nth-child(5) { animation-delay: 0.20s; }
+.view.active > *:nth-child(6) { animation-delay: 0.25s; }
+.view.active > *:nth-child(7) { animation-delay: 0.30s; }
+.view.active > *:nth-child(8) { animation-delay: 0.35s; }
+
+/* 结果卡片逐个弹出 */
+.result-wrap { animation: popIn 0.4s ease both; }
+.gong-grid > * { animation: fadeUp 0.4s ease both; }
+.gong-grid > *:nth-child(2) { animation-delay: 0.08s; }
+.gong-grid > *:nth-child(3) { animation-delay: 0.16s; }
+
+/* 卦符轻微浮动 */
+.zy-symbol, .daily-name { display: inline-block; }
+.zy-symbol { animation: guaFloat 3s ease-in-out infinite; }
+@keyframes guaFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* 今日卦卡 hover 微效 */
+.daily-card { transition: transform .15s ease, box-shadow .2s; }
+.daily-card:active { transform: scale(0.985); }
+
+/* 掐指落宫高亮强化 */
+.spot.land { animation: landPulse 0.5s ease; }
+@keyframes landPulse {
+  0% { transform: translate(-50%, -50%) scale(0.9); box-shadow: 0 0 0 0 rgba(178, 58, 46, 0.55); }
+  50% { transform: translate(-50%, -50%) scale(1.35); box-shadow: 0 0 0 10px rgba(178, 58, 46, 0); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* ===== 神秘动态背景（卦符漂浮 + 星点闪烁） ===== */
+.bg-mystic {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+.bg-mystic span {
+  position: absolute;
+  font-size: 52px;
+  line-height: 1;
+  color: var(--ink);
+  opacity: 0.055;
+  animation: mysticDrift linear infinite;
+  will-change: transform;
+}
+.bg-mystic span:nth-child(1) { top: 7%;  left: 5%;  animation-duration: 27s; animation-delay: -3s; }
+.bg-mystic span:nth-child(2) { top: 14%; left: 84%; animation-duration: 31s; animation-delay: -9s; }
+.bg-mystic span:nth-child(3) { top: 32%; left: 88%; animation-duration: 24s; animation-delay: -14s; }
+.bg-mystic span:nth-child(4) { top: 46%; left: 3%;  animation-duration: 34s; animation-delay: -6s; }
+.bg-mystic span:nth-child(5) { top: 63%; left: 90%; animation-duration: 29s; animation-delay: -18s; }
+.bg-mystic span:nth-child(6) { top: 78%; left: 6%;  animation-duration: 26s; animation-delay: -11s; }
+.bg-mystic span:nth-child(7) { top: 88%; left: 80%; animation-duration: 33s; animation-delay: -2s; }
+.bg-mystic span:nth-child(8) { top: 55%; left: 46%; animation-duration: 22s; animation-delay: -7s; }
+
+@keyframes mysticDrift {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  25%  { transform: translate(26px, -34px) rotate(90deg); }
+  50%  { transform: translate(-18px, -60px) rotate(180deg); }
+  75%  { transform: translate(30px, -20px) rotate(270deg); }
+  100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+/* 星点闪烁 */
+.m-star {
+  position: absolute;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: var(--cinnabar);
+  animation: twinkle ease-in-out infinite;
+  opacity: 0;
+}
+.m-star.s1 { top: 20%; left: 20%; animation-duration: 3.2s; animation-delay: 0s; }
+.m-star.s2 { top: 40%; left: 72%; animation-duration: 4.1s; animation-delay: 1.2s; }
+.m-star.s3 { top: 62%; left: 30%; animation-duration: 3.6s; animation-delay: 2.1s; }
+.m-star.s4 { top: 80%; left: 55%; animation-duration: 4.6s; animation-delay: 0.6s; }
+.m-star.s5 { top: 28%; left: 92%; animation-duration: 3.9s; animation-delay: 1.8s; }
+.m-star.s6 { top: 90%; left: 18%; animation-duration: 4.3s; animation-delay: 2.8s; }
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0; transform: scale(0.6); }
+  50% { opacity: 0.35; transform: scale(1.4); }
+}
+
+/* 太极水印慢速旋转（神秘感） */
+body::before {
+  animation: taijiSpin 90s linear infinite;
+}
+@keyframes taijiSpin {
+  from { transform: translateX(-50%) rotate(0deg); }
+  to { transform: translateX(-50%) rotate(360deg); }
+}
+
+/* 内容层在背景之上 */
+.app-header, .app-main { position: relative; z-index: 1; }

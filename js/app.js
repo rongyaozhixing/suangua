@@ -390,6 +390,26 @@
     });
   }
 
+  // ============ 声音开关 ============
+  function initSound() {
+    const btn = $('#sound-toggle');
+    if (!btn || !window.Sound) return;
+    const saved = localStorage.getItem('xln_sound');
+    const on = saved === null ? true : saved === '1';
+    window.Sound.setEnabled(on);
+    btn.textContent = on ? '🔊' : '🔇';
+    btn.addEventListener('click', () => {
+      const v = !window.Sound.isEnabled();
+      window.Sound.setEnabled(v);
+      localStorage.setItem('xln_sound', v ? '1' : '0');
+      btn.textContent = v ? '🔊' : '🔇';
+      if (v) window.Sound.chime();   // 开启时试音
+    });
+    // 首次手势解锁 AudioContext（占卜时才能出声）
+    document.addEventListener('click', () => window.Sound.unlock(), { once: true });
+    document.addEventListener('touchstart', () => window.Sound.unlock(), { once: true });
+  }
+
   // ============ 周易六十四卦 ============
   const ZHOUYI = (typeof window !== 'undefined' && window.ZHOUYI) || [];
   const BAGUA_LINK = (typeof window !== 'undefined' && window.BAGUA_LINK) || {};
@@ -761,6 +781,7 @@
     initHistory();
     initPaipanTab();
     initZhouyiTab();
+    initSound();
     renderDailyGua();
   });
 })();

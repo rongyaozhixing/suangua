@@ -156,6 +156,7 @@
             }
             remaining--;
             setActive(nextSeq(currentSeq), false);
+            if (globalThis.Sound) Sound.tap();          // 掐指落宫音
             const shown = Math.round(1 + (full - 1) * (steps - remaining) / steps);
             setPhaseText(`${ph.label} · ${ph.display ? ph.display(shown) : shown}`);
             timer = setTimeout(stepFn, o.stepMs);
@@ -168,6 +169,7 @@
           const finalSeq = ((last.startSeq + last.count - 2) % (is9 ? 9 : 6)) + 1;
           setActive(finalSeq, true);
           setPhaseText(`落于「${names[finalSeq - 1]}」`);
+          if (globalThis.Sound) Sound.chime();          // 起卦完成音
           timer = setTimeout(() => {
             wrap.classList.remove('run');
             resolve();
