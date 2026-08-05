@@ -1,6 +1,6 @@
 {
-  "versionCode": 103,
-  "versionName": "1.0.4",
-  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.0.4/app-release.apk",
-  "note": "新增桌面小组件「今日卦」+ 手机返回键优化"
+  "versionCode": 104,
+  "versionName": "1.0.5",
+  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.0.5/app-release.apk",
+  "note": "内置离线版：不翻墙也能用，联网自动加载最新"
 }

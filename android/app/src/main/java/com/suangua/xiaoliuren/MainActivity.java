@@ -39,8 +39,11 @@ import java.net.URL;
 public class MainActivity extends Activity {
 
     private static final String APP_URL = "https://rongyaozhixing.github.io/suangua/";
+    private static final String LOCAL_URL = "file:///android_asset/web/index.html";
     private static final String VERSION_URL = "https://rongyaozhixing.github.io/suangua/version.json";
     private static final String UPDATE_APK_NAME = "xiaoliuren-update.apk";
+    private static final String PREFS = "xln_prefs";
+    private static final String KEY_REMOTE_OK = "remote_ok";
 
     private WebView webView;
     private LinearLayout errorView;
@@ -112,8 +115,14 @@ public class MainActivity extends Activity {
 
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                if (request != null && request.getUrl() != null
-                        && request.getUrl().toString().equals(APP_URL)) {
+                String url = request != null && request.getUrl() != null ? request.getUrl().toString() : "";
+                if (url.startsWith(APP_URL)) {
+                    // 远程加载失败 → 回退内置离线版
+                    getSharedPreferences(PREFS, MODE_PRIVATE).edit().putBoolean(KEY_REMOTE_OK, false).apply();
+                    progressBar.setVisibility(View.GONE);
+                    webView.loadUrl(LOCAL_URL);
+                } else if (url.startsWith("file:///android_asset") && !webView.getUrl().startsWith("file:///android_asset")) {
+                    // 本地内置也失败（不应发生）→ 显示错误
                     progressBar.setVisibility(View.GONE);
                     webView.setVisibility(View.GONE);
                     errorView.setVisibility(View.VISIBLE);
@@ -127,6 +136,46 @@ public class MainActivity extends Activity {
         // 启动时检查软件更新（后台线程，不阻塞页面加载）
         registerReceiver(downloadReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
         checkUpdate();
+    }
+
+    /**
+     * 加载策略：内置离线版兜底 + 远程优先
+     * 上次远程可用 → 先试远程（失败自动回退本地）；否则先本地，后台探测远程可达再切换
+     */
+    private void loadUrl() {
+        boolean remoteOk = getSharedPreferences(PREFS, MODE_PRIVATE).getBoolean(KEY_REMOTE_OK, false);
+        if (remoteOk) {
+            progressBar.setProgress(5);
+            progressBar.setVisibility(View.VISIBLE);
+            webView.loadUrl(APP_URL);
+        } else {
+            webView.loadUrl(LOCAL_URL);
+            probeRemote();
+        }
+    }
+
+    /** 后台探测远程是否可达，可达则切到最新版 */
+    private void probeRemote() {
+        new Thread(() -> {
+            try {
+                HttpURLConnection c = (HttpURLConnection) new URL(APP_URL).openConnection();
+                c.setConnectTimeout(6000);
+                c.setReadTimeout(6000);
+                c.setRequestMethod("GET");
+                int code = c.getResponseCode();
+                c.disconnect();
+                if (code == 200) {
+                    getSharedPreferences(PREFS, MODE_PRIVATE).edit().putBoolean(KEY_REMOTE_OK, true).apply();
+                    runOnUiThread(() -> {
+                        progressBar.setProgress(5);
+                        progressBar.setVisibility(View.VISIBLE);
+                        webView.loadUrl(APP_URL);
+                    });
+                }
+            } catch (Exception ignored) {
+                // 远程不可达：保持本地内置版
+            }
+        }).start();
     }
 
     /** 联网检查版本，发现新版 → 弹窗提示 */
@@ -218,12 +267,6 @@ public class MainActivity extends Activity {
         } catch (Exception e) {
             Toast.makeText(this, "安装失败：" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void loadUrl() {
-        progressBar.setProgress(5);
-        progressBar.setVisibility(View.VISIBLE);
-        webView.loadUrl(APP_URL);
     }
 
     private boolean isOnline() {
