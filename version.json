@@ -1,6 +1,6 @@
 {
-  "versionCode": 119,
-  "versionName": "1.2.4",
-  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.2.4/app-release.apk",
-  "note": "修复 Service Worker 缓存导致的手掌图不显示：BUILD_VER 指纹更新+PRECACHE 改为当前真实文件（含 palm-base.png）+静态资源改网络优先（保证拿到最新版），旧缓存自动清理"
+  "versionCode": 120,
+  "versionName": "1.2.5",
+  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.2.5/app-release.apk",
+  "note": "六宫手掌改用用户提供的标准掌诀图（镜像为左手版，穴位按图标注 OCR 精确定位：大安食指根/留连食指尖/速喜中指尖/赤口无名指尖/小吉无名指根/空亡中指根）；图上自带宫名标注，spots 文字隐藏不重复；九宫保持干净黑白手图"
 }

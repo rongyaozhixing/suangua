@@ -9,13 +9,13 @@
   'use strict';
 
   const NAMES = ['大安', '留连', '速喜', '赤口', '小吉', '空亡']; // seq 1-6
-  // 六宫穴位（palm-base.png 百分比：左手掌心朝上，拇指在右 → 食指在最右、无名指在左）
+  // 六宫穴位（palm-user.png 百分比：用户参考图镜像后的左手版，图自带宫名标注）
   // 顺序数数：大安(食指根)→留连(食指尖)→速喜(中指尖)→赤口(无名指尖)→小吉(无名指根)→空亡(中指根)
   const POS6 = {
-    '大安': [62, 35], '留连': [65, 12], '速喜': [50, 10],
-    '赤口': [35, 12], '小吉': [38, 35], '空亡': [50, 33]
+    '大安': [64, 51], '留连': [65, 24], '速喜': [48, 21],
+    '赤口': [32, 36], '小吉': [32, 50], '空亡': [48, 41]
   };
-  // 九宫穴位（每指 尖/中/根 三档：食指=留连/大安/桃花，中指=速喜/空亡/小吉，无名指=病符/赤口/天德）
+  // 九宫穴位（palm-base.png 干净手图：每指 尖/中/根 三档：食指=留连/大安/桃花，中指=速喜/空亡/小吉，无名指=病符/赤口/天德）
   const POS9 = {
     '留连': [65, 12], '大安': [62, 24], '桃花': [62, 36],
     '速喜': [50, 10], '空亡': [50, 22], '小吉': [50, 34],
@@ -58,12 +58,13 @@
     const pos = is9 ? POS9 : POS6;
     const names = is9 ? NAMES.concat(['病符', '桃花', '天德']) : NAMES;
     const nextSeq = is9 ? nextSeq9 : nextSeq6;
-    const photoSrc = 'assets/palm-base.png';   // 六宫/九宫共用干净底图（无文字）
+    // 六宫用用户参考图（自带宫名标注）→ 隐藏 spots 的文字标签避免重复；九宫用干净手图 → 显示标签
+    const photoSrc = is9 ? 'assets/palm-base.png' : 'assets/palm-user.png';
 
     container.innerHTML = `
       <div class="palm-wrap">
         <div class="palm-steps"></div>
-        <div class="palm-photo-box">
+        <div class="palm-photo-box${is9 ? '' : ' no-label'}">
           <img class="palm-photo" src="${photoSrc}" alt="左手掌诀">
           <div class="spots-layer">${spotsHTML(pos, names)}</div>
           <div class="cursor-dot"></div>

@@ -2236,3 +2236,8 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: 0.12em; }
 
 /* 确保视口高度时背景元素不遮挡内容 */
 .app-header, .app-main, .app-footer { position: relative; z-index: 1; }
+
+/* 六宫用户图自带宫名标注 → 隐藏 spots 文字标签（保留穴位点） */
+.palm-photo-box.no-label .spot-text { display: none; }
+.palm-photo-box.no-label .spot-core { width: 9px; height: 9px; }
+.palm-photo-box.no-label .spot { width: 16px; height: 16px; }
