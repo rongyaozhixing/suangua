@@ -90,6 +90,11 @@
           <span class="mc-name">灵机起卦</span>
           <span class="mc-desc">见物闻声 · 即时取数</span>
         </button>
+        <button class="method-card" data-view="fortune">
+          <span class="mc-icon">🔮</span>
+          <span class="mc-name">算我的命</span>
+          <span class="mc-desc">生辰八字 · 十二类逐项解读</span>
+        </button>
         <button class="method-card" data-view="paipan">
           <span class="mc-icon">☯</span>
           <span class="mc-name">命盘排盘</span>
@@ -275,6 +280,15 @@
       <div id="zhouyi-list" class="zhouyi-list"></div>
     </section>
 
+    <!-- 算我的命 -->
+    <section id="view-fortune" class="view">
+      <div class="view-head">
+        <button class="btn-back" data-back="home">‹ 返回</button>
+        <h2>算我的命</h2>
+      </div>
+      <div id="fortune-root"></div>
+    </section>
+
     <!-- 命理真题库 -->
     <section id="view-bench" class="view">
       <div class="view-head">
@@ -308,6 +322,7 @@
   <script src="js/bench-data.js"></script>
   <script src="js/sound.js"></script>
   <script src="js/paipan.js"></script>
+  <script src="js/fortune-read.js"></script>
   <script src="js/palm.js"></script>
   <script src="js/app.js"></script>
   <script>

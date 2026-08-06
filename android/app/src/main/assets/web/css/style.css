@@ -2373,3 +2373,39 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: 0.12em; }
   gap: var(--sp-3);
 }
 .quiz-nav .btn { padding: 10px 18px; font-size: var(--fs-sm); }
+
+/* ================================================================
+   算我的命
+   ================================================================ */
+.fortune-hero {
+  text-align: center;
+  padding: var(--sp-5);
+  margin-bottom: var(--sp-4);
+}
+.fortune-pillars {
+  font-size: var(--fs-md);
+  color: var(--ink-700);
+  letter-spacing: 2px;
+  line-height: 2;
+}
+.fortune-list { display: grid; gap: var(--sp-3); }
+.fortune-card { padding: var(--sp-4) var(--sp-5); }
+.fortune-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-2);
+}
+.fortune-name {
+  font-family: "Kaiti SC", "STKaiti", "Noto Serif SC", serif;
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--ink-900);
+}
+.fortune-text {
+  font-size: var(--fs-md);
+  color: var(--ink-500);
+  line-height: 1.9;
+}
+#f-again { width: 100%; margin-top: var(--sp-4); }

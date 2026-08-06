@@ -332,6 +332,100 @@
     }
   }
 
+  // ============ 算我的命（生辰 → 12 类解读） ============
+  function initFortuneTab() {
+    const root = $('#fortune-root');
+    if (!root || !window.Fortune) return;
+    renderFortuneForm();
+  }
+
+  function renderFortuneForm() {
+    const now = new Date();
+    const curY = now.getFullYear();
+    let yOpts = '';
+    for (let y = curY - 90; y <= curY; y++) yOpts += `<option value="${y}" ${y === curY - 30 ? 'selected' : ''}>${y}年</option>`;
+    const root = $('#fortune-root');
+    root.innerHTML = `
+      <p class="bench-intro">输入你的出生信息，按传统八字框架逐项解读（性格/事业/财运/婚姻…12 类）</p>
+      <div class="field">
+        <label>出生日期（公历）</label>
+        <div class="date-row">
+          <select id="f-year">${yOpts}</select>
+          <select id="f-month"></select>
+          <select id="f-day"></select>
+        </div>
+        <p class="lunar-preview" id="f-lunar"></p>
+      </div>
+      <div class="field">
+        <label>出生时辰</label>
+        <select id="f-hour"></select>
+      </div>
+      <div class="field">
+        <label>性别</label>
+        <div class="seg">
+          <button class="seg-btn active" data-g="男">男</button>
+          <button class="seg-btn" data-g="女">女</button>
+        </div>
+      </div>
+      <button class="btn-primary" id="f-submit">解读我的命</button>
+      <div id="fortune-result" class="result"></div>`;
+    const ySel = root.querySelector('#f-year'), mSel = root.querySelector('#f-month'), dSel = root.querySelector('#f-day');
+    mSel.innerHTML = Array.from({ length: 12 }, (_, i) => `<option value="${i + 1}">${i + 1}月</option>`);
+    mSel.value = '1';
+    function fillDays() {
+      const days = new Date(Number(ySel.value), Number(mSel.value), 0).getDate();
+      dSel.innerHTML = Array.from({ length: days }, (_, i) => `<option value="${i + 1}" ${i === 0 ? 'selected' : ''}>${i + 1}日</option>`);
+    }
+    fillDays();
+    root.querySelector('#f-hour').innerHTML = X.SHICHEN.map((s, i) => `<option value="${i + 1}">${s.name}时（${s.range}）</option>`);
+    function updateLunar() {
+      try {
+        const lu = L.solar2lunar(Number(ySel.value), Number(mSel.value), Number(dSel.value));
+        root.querySelector('#f-lunar').textContent = `农历${lu.monthCn}${lu.dayCn} · ${lu.yearGz}年`;
+      } catch (e) { /* 忽略 */ }
+    }
+    ySel.addEventListener('change', () => { fillDays(); updateLunar(); });
+    mSel.addEventListener('change', () => { fillDays(); updateLunar(); });
+    dSel.addEventListener('change', updateLunar);
+    updateLunar();
+    let gender = '男';
+    root.querySelectorAll('.seg [data-g]').forEach(b => b.addEventListener('click', () => {
+      gender = b.dataset.g;
+      root.querySelectorAll('.seg [data-g]').forEach(x => x.classList.toggle('active', x === b));
+    }));
+    root.querySelector('#f-submit').addEventListener('click', () => {
+      try {
+        const lu = L.solar2lunar(Number(ySel.value), Number(mSel.value), Number(dSel.value));
+        const hourSeq = Number(root.querySelector('#f-hour').value);
+        renderFortuneResult(lu, hourSeq, gender);
+      } catch (e) { alert('日期无效：' + e.message); }
+    });
+  }
+
+  function renderFortuneResult(lu, hourSeq, gender) {
+    const f = window.Fortune.read(lu, hourSeq, gender);
+    const root = $('#fortune-root');
+    const cards = f.items.map(it => `
+      <div class="fortune-card card">
+        <div class="fortune-head">
+          <span class="fortune-name">${it.name}</span>
+          <span class="badge ${it.judge === '吉' ? 'badge--ji' : it.judge === '需注意' ? 'badge--xiong' : 'badge--ping'}">${it.judge}</span>
+        </div>
+        <p class="fortune-text">${it.text}</p>
+      </div>`).join('');
+    root.innerHTML = `
+      <div class="fortune-hero card">
+        <h3 class="quiz-question">你的命 · 概要</h3>
+        <p class="fortune-pillars">四柱：${f.pillars.年}　${f.pillars.月}　${f.pillars.日}　${f.pillars.时}</p>
+        <p class="fortune-pillars">日主：${f.dayWx}命 · ${f.ws}</p>
+      </div>
+      <div class="fortune-list">${cards}</div>
+      <button class="btn btn--ghost" id="f-again">‹ 重新输入</button>
+      <p class="disclaimer">※ 命理仅为传统文化参考，不可左右现实抉择。</p>`;
+    root.querySelector('#f-again').addEventListener('click', renderFortuneForm);
+    root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
   // ============ 命理真题库 ============
   let benchFilter = '全部';
   let benchState = { view: 'list', idx: 0 };
@@ -1020,6 +1114,7 @@
     initPaipanTab();
     initZhouyiTab();
     initBenchTab();
+    initFortuneTab();
     initSound();
     renderDailyGua();
     renderHuangli();
