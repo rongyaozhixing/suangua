@@ -2409,3 +2409,7 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: 0.12em; }
   line-height: 1.9;
 }
 #f-again { width: 100%; margin-top: var(--sp-4); }
+
+/* AI 深度解读 */
+.ai-hint { font-size: var(--fs-xs); color: var(--ink-100); margin-top: var(--sp-2); }
+.fortune-ai { border-left: 3px solid var(--gold); }

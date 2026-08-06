@@ -418,112 +418,53 @@
         <h3 class="quiz-question">你的命 · 概要</h3>
         <p class="fortune-pillars">四柱：${f.pillars.年}　${f.pillars.月}　${f.pillars.日}　${f.pillars.时}</p>
         <p class="fortune-pillars">日主：${f.dayWx}命 · ${f.ws}</p>
+        <button class="btn btn--cinnabar" id="f-ai" style="margin-top:12px">✨ AI 深度解读（真题知识）</button>
+        <p class="ai-hint">电脑本地版可用大模型按真题命理逻辑深度解读；手机端为离线规则解读</p>
       </div>
       <div class="fortune-list">${cards}</div>
       <button class="btn btn--ghost" id="f-again">‹ 重新输入</button>
       <p class="disclaimer">※ 命理仅为传统文化参考，不可左右现实抉择。</p>`;
     root.querySelector('#f-again').addEventListener('click', renderFortuneForm);
-    root.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  // ============ 命理真题库 ============
-  let benchFilter = '全部';
-  let benchState = { view: 'list', idx: 0 };
-
-  function initBenchTab() {
-    const root = $('#bench-root');
-    if (!root || !window.BENCH || !window.BENCH.length) return;
-    renderBenchList();
-  }
-
-  function benchList() {
-    if (benchFilter === '全部') return window.BENCH;
-    return window.BENCH.filter(b => b.c === benchFilter);
-  }
-
-  function renderBenchList() {
-    const cats = ['全部'].concat([...new Set(window.BENCH.map(b => b.c))]);
-    const list = benchList();
-    const root = $('#bench-root');
-    root.innerHTML = `
-      <p class="bench-intro">全球命理师大赛真题（2022-2025）· ${window.BENCH.length} 题 · 选完即见答案</p>
-      <div class="seg bench-cats">${cats.map(c =>
-        `<button class="${c === benchFilter ? 'active' : ''}" data-cat="${c}">${c}</button>`).join('')}</div>
-      <div class="bench-list">
-        ${list.map((b, i) => `
-          <button class="bench-item" data-i="${i}">
-            <span class="bench-no">${b.id.replace('ftb_', '#')}</span>
-            <span class="bench-q">${b.q}</span>
-            <span class="bench-cat">${b.c}</span>
-          </button>`).join('')}
-      </div>`;
-    root.querySelectorAll('.bench-cats button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        benchFilter = btn.dataset.cat;
-        renderBenchList();
-      });
-    });
-    root.querySelectorAll('.bench-item').forEach(btn => {
-      btn.addEventListener('click', () => {
-        benchState = { view: 'quiz', idx: Number(btn.dataset.i) };
-        renderBenchQuiz();
-      });
-    });
-  }
-
-  function renderBenchQuiz() {
-    const b = benchList()[benchState.idx];
-    if (!b) return;
-    const letters = ['A', 'B', 'C', 'D'];
-    const root = $('#bench-root');
-    root.innerHTML = `
-      <div class="quiz-card card">
-        <div class="quiz-head">
-          <span class="badge badge--gold">${b.c}</span>
-          <span class="quiz-no">${b.id.replace('ftb_', '#')} · ${benchState.idx + 1}/${benchList().length}</span>
-        </div>
-        <p class="quiz-birth">${b.raw}</p>
-        <h3 class="quiz-question">${b.q}</h3>
-        <div class="quiz-options">
-          ${b.o.map((t, i) => `
-            <button class="quiz-opt" data-letter="${letters[i]}">
-              <span class="quiz-letter">${letters[i]}</span>
-              <span class="quiz-text">${t}</span>
-            </button>`).join('')}
-        </div>
-        <div class="quiz-result" hidden></div>
-        <div class="quiz-nav">
-          <button class="btn btn--ghost" id="quiz-back">‹ 返回列表</button>
-          <button class="btn btn--cinnabar" id="quiz-next" ${benchState.idx >= benchList().length - 1 ? 'disabled' : ''}>下一题 ›</button>
-        </div>
-      </div>`;
-    root.querySelectorAll('.quiz-opt').forEach(opt => {
-      opt.addEventListener('click', () => {
-        const picked = opt.dataset.letter;
-        const correct = b.a;
-        opt.classList.add(picked === correct ? 'right' : 'wrong');
-        root.querySelectorAll('.quiz-opt').forEach(o => {
-          o.disabled = true;
-          if (o.dataset.letter === correct) o.classList.add('right');
+    root.querySelector('#f-ai').addEventListener('click', async () => {
+      const btn = root.querySelector('#f-ai');
+      btn.disabled = true;
+      btn.textContent = 'AI 深度解读中…';
+      try {
+        const resp = await fetch('/api/fortune-ai', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ year: lu.solarY, month: lu.solarM, day: lu.solarD, hour: hourSeq, gender })
         });
-        const res = root.querySelector('.quiz-result');
-        res.hidden = false;
-        res.innerHTML = picked === correct
-          ? `<span class="badge badge--ji">✓ 答对</span><span class="quiz-ans">正确答案：${correct}. ${b.o[letters.indexOf(correct)]}</span>`
-          : `<span class="badge badge--xiong">✗ 答错</span><span class="quiz-ans">正确答案：${correct}. ${b.o[letters.indexOf(correct)]}</span>`;
-        if (globalThis.Sound) Sound.tap();
-      });
-    });
-    root.querySelector('#quiz-back').addEventListener('click', () => {
-      benchState = { view: 'list', idx: 0 };
-      renderBenchList();
-    });
-    root.querySelector('#quiz-next').addEventListener('click', () => {
-      if (benchState.idx < benchList().length - 1) {
-        benchState.idx += 1;
-        renderBenchQuiz();
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const data = await resp.json();
+        if (data.items && data.items.length) {
+          const aiCards = data.items.map(it => `
+            <div class="fortune-card card fortune-ai">
+              <div class="fortune-head">
+                <span class="fortune-name">${it.name}</span>
+                <span class="badge ${it.judge === '吉' ? 'badge--ji' : it.judge === '需注意' ? 'badge--xiong' : 'badge--ping'}">${it.judge}</span>
+              </div>
+              <p class="fortune-text">${it.text}</p>
+            </div>`).join('');
+          const aiBlock = document.createElement('div');
+          aiBlock.innerHTML = `<h3 class="section-title">✨ AI 深度解读（真题知识）</h3><div class="fortune-list">${aiCards}</div>`;
+          root.querySelector('.fortune-list').after(aiBlock);
+          btn.remove();
+        } else if (data.text) {
+          const aiBlock = document.createElement('div');
+          aiBlock.innerHTML = `<h3 class="section-title">✨ AI 深度解读</h3><div class="fortune-card card"><p class="fortune-text">${data.text}</p></div>`;
+          root.querySelector('.fortune-list').after(aiBlock);
+          btn.remove();
+        } else {
+          btn.textContent = data.error || 'AI 解读暂不可用（需本地服务器）';
+          btn.disabled = false;
+        }
+      } catch (e) {
+        btn.textContent = 'AI 解读需在电脑本地版使用（手机为离线解读）';
+        btn.disabled = false;
       }
     });
+    root.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   // ============ 历史记录（localStorage） ============
@@ -947,7 +888,7 @@
     });
     // 底部导航条
     document.body.classList.add('has-nav');
-    const BN = { home: 'home', zhouyi: 'zhouyi', bench: 'bench', history: 'history', help: 'help' };
+    const BN = { home: 'home', zhouyi: 'zhouyi', history: 'history', help: 'help' };
     document.querySelectorAll('.bn-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const target = BN[btn.dataset.bn] || 'home';
@@ -980,7 +921,7 @@
     document.getElementById('view-' + name).classList.add('active');
     document.querySelectorAll('.bn-btn').forEach(b => {
       const bn = b.dataset.bn;
-      b.classList.toggle('active', bn === name || (bn === 'home' && !['home','zhouyi','bench','history','help'].includes(name)));
+      b.classList.toggle('active', bn === name || (bn === 'home' && !['home','zhouyi','history','help'].includes(name)));
     });
     if (name === 'home') { renderDailyGua(); renderHuangli(); }
     else if (name === 'history') renderHistory();
@@ -1113,7 +1054,6 @@
     initHistory();
     initPaipanTab();
     initZhouyiTab();
-    initBenchTab();
     initFortuneTab();
     initSound();
     renderDailyGua();
