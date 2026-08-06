@@ -1,8 +1,8 @@
 {
-  "versionCode": 122,
-  "versionName": "1.2.7",
+  "versionCode": 123,
+  "versionName": "1.3.0",
   "apkUrl": "https://xiaoliuren-app.oss-cn-beijing.aliyuncs.com/app-release.bin",
   "ossApkUrl": "https://xiaoliuren-app.oss-cn-beijing.aliyuncs.com/app-release.bin",
-  "githubApkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.2.7/app-release.apk",
-  "note": "恢复九宫原手掌图 + 国内直链更新（不翻墙可下载）"
+  "githubApkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.3.0/app-release.apk",
+  "note": "新增「命理真题」功能：融合 MingLi-Bench 全球命师大赛真题 160 题（2022-2025，12 类别），可筛选类别、答题自测、选完即见正确答案与高亮，内置离线可用（底部导航新增「真题」入口）"
 }

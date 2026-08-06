@@ -2241,3 +2241,135 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: 0.12em; }
 .palm-photo-box.no-label .spot-text { display: none; }
 .palm-photo-box.no-label .spot-core { width: 9px; height: 9px; }
 .palm-photo-box.no-label .spot { width: 16px; height: 16px; }
+
+/* ================================================================
+   命理真题库
+   ================================================================ */
+.bench-intro {
+  font-size: var(--fs-sm);
+  color: var(--ink-300);
+  text-align: center;
+  letter-spacing: 1px;
+  margin-bottom: var(--sp-3);
+}
+.bench-cats {
+  flex-wrap: wrap;
+  border-radius: var(--r-lg);
+  margin-bottom: var(--sp-4);
+}
+.bench-cats button { font-size: var(--fs-xs); padding: 8px 8px; }
+.bench-list {
+  display: grid;
+  gap: var(--sp-3);
+}
+.bench-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  background: rgba(250, 247, 240, 0.5);
+  -webkit-backdrop-filter: blur(14px) saturate(0.92);
+  backdrop-filter: blur(14px) saturate(0.92);
+  border: 1px solid rgba(179, 154, 99, 0.22);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: transform var(--dur-fast), border-color var(--dur-fast);
+}
+.bench-item:active { transform: scale(0.985); border-color: var(--gold); }
+.bench-no {
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  color: var(--gold-600);
+  background: var(--gold-100);
+  padding: 2px 8px;
+  border-radius: var(--r-pill);
+  white-space: nowrap;
+}
+.bench-q { flex: 1; font-size: var(--fs-md); color: var(--ink-900); line-height: 1.6; }
+.bench-cat {
+  font-size: var(--fs-xs);
+  color: var(--ink-300);
+  background: var(--paper-2);
+  padding: 2px 8px;
+  border-radius: var(--r-pill);
+  white-space: nowrap;
+}
+
+/* 答题卡 */
+.quiz-card { padding: var(--sp-5); }
+.quiz-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-3);
+}
+.quiz-no { font-size: var(--fs-xs); color: var(--ink-300); letter-spacing: 1px; }
+.quiz-birth {
+  font-size: var(--fs-sm);
+  color: var(--ink-500);
+  background: var(--paper-2);
+  border: 1px dashed var(--line);
+  border-radius: var(--r-sm);
+  padding: var(--sp-2) var(--sp-3);
+  margin-bottom: var(--sp-3);
+}
+.quiz-question {
+  font-family: "Kaiti SC", "STKaiti", "Noto Serif SC", serif;
+  font-size: var(--fs-xl);
+  color: var(--ink-900);
+  margin-bottom: var(--sp-4);
+  line-height: 1.5;
+}
+.quiz-options { display: grid; gap: var(--sp-3); margin-bottom: var(--sp-4); }
+.quiz-opt {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--paper-0);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: all var(--dur-fast);
+}
+.quiz-opt:active { transform: scale(0.985); }
+.quiz-letter {
+  width: 26px; height: 26px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: var(--fs-sm);
+  font-weight: 800;
+  color: var(--gold-600);
+  background: var(--gold-100);
+  border-radius: 50%;
+}
+.quiz-text { font-size: var(--fs-md); color: var(--ink-700); line-height: 1.6; }
+.quiz-opt.right {
+  border-color: var(--cinnabar);
+  background: var(--cinnabar-100);
+}
+.quiz-opt.right .quiz-letter { color: var(--paper-0); background: var(--cinnabar); }
+.quiz-opt.wrong {
+  border-color: var(--ink-300);
+  opacity: 0.55;
+}
+.quiz-result {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--paper-2);
+  border-radius: var(--r-md);
+  margin-bottom: var(--sp-4);
+}
+.quiz-ans { font-size: var(--fs-sm); color: var(--ink-700); line-height: 1.6; }
+.quiz-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+.quiz-nav .btn { padding: 10px 18px; font-size: var(--fs-sm); }

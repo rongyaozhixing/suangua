@@ -332,6 +332,106 @@
     }
   }
 
+  // ============ 命理真题库 ============
+  let benchFilter = '全部';
+  let benchState = { view: 'list', idx: 0 };
+
+  function initBenchTab() {
+    const root = $('#bench-root');
+    if (!root || !window.BENCH || !window.BENCH.length) return;
+    renderBenchList();
+  }
+
+  function benchList() {
+    if (benchFilter === '全部') return window.BENCH;
+    return window.BENCH.filter(b => b.c === benchFilter);
+  }
+
+  function renderBenchList() {
+    const cats = ['全部'].concat([...new Set(window.BENCH.map(b => b.c))]);
+    const list = benchList();
+    const root = $('#bench-root');
+    root.innerHTML = `
+      <p class="bench-intro">全球命理师大赛真题（2022-2025）· ${window.BENCH.length} 题 · 选完即见答案</p>
+      <div class="seg bench-cats">${cats.map(c =>
+        `<button class="${c === benchFilter ? 'active' : ''}" data-cat="${c}">${c}</button>`).join('')}</div>
+      <div class="bench-list">
+        ${list.map((b, i) => `
+          <button class="bench-item" data-i="${i}">
+            <span class="bench-no">${b.id.replace('ftb_', '#')}</span>
+            <span class="bench-q">${b.q}</span>
+            <span class="bench-cat">${b.c}</span>
+          </button>`).join('')}
+      </div>`;
+    root.querySelectorAll('.bench-cats button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        benchFilter = btn.dataset.cat;
+        renderBenchList();
+      });
+    });
+    root.querySelectorAll('.bench-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        benchState = { view: 'quiz', idx: Number(btn.dataset.i) };
+        renderBenchQuiz();
+      });
+    });
+  }
+
+  function renderBenchQuiz() {
+    const b = benchList()[benchState.idx];
+    if (!b) return;
+    const letters = ['A', 'B', 'C', 'D'];
+    const root = $('#bench-root');
+    root.innerHTML = `
+      <div class="quiz-card card">
+        <div class="quiz-head">
+          <span class="badge badge--gold">${b.c}</span>
+          <span class="quiz-no">${b.id.replace('ftb_', '#')} · ${benchState.idx + 1}/${benchList().length}</span>
+        </div>
+        <p class="quiz-birth">${b.raw}</p>
+        <h3 class="quiz-question">${b.q}</h3>
+        <div class="quiz-options">
+          ${b.o.map((t, i) => `
+            <button class="quiz-opt" data-letter="${letters[i]}">
+              <span class="quiz-letter">${letters[i]}</span>
+              <span class="quiz-text">${t}</span>
+            </button>`).join('')}
+        </div>
+        <div class="quiz-result" hidden></div>
+        <div class="quiz-nav">
+          <button class="btn btn--ghost" id="quiz-back">‹ 返回列表</button>
+          <button class="btn btn--cinnabar" id="quiz-next" ${benchState.idx >= benchList().length - 1 ? 'disabled' : ''}>下一题 ›</button>
+        </div>
+      </div>`;
+    root.querySelectorAll('.quiz-opt').forEach(opt => {
+      opt.addEventListener('click', () => {
+        const picked = opt.dataset.letter;
+        const correct = b.a;
+        opt.classList.add(picked === correct ? 'right' : 'wrong');
+        root.querySelectorAll('.quiz-opt').forEach(o => {
+          o.disabled = true;
+          if (o.dataset.letter === correct) o.classList.add('right');
+        });
+        const res = root.querySelector('.quiz-result');
+        res.hidden = false;
+        res.innerHTML = picked === correct
+          ? `<span class="badge badge--ji">✓ 答对</span><span class="quiz-ans">正确答案：${correct}. ${b.o[letters.indexOf(correct)]}</span>`
+          : `<span class="badge badge--xiong">✗ 答错</span><span class="quiz-ans">正确答案：${correct}. ${b.o[letters.indexOf(correct)]}</span>`;
+        if (globalThis.Sound) Sound.tap();
+      });
+    });
+    root.querySelector('#quiz-back').addEventListener('click', () => {
+      benchState = { view: 'list', idx: 0 };
+      renderBenchList();
+    });
+    root.querySelector('#quiz-next').addEventListener('click', () => {
+      if (benchState.idx < benchList().length - 1) {
+        benchState.idx += 1;
+        renderBenchQuiz();
+      }
+    });
+  }
+
   // ============ 历史记录（localStorage） ============
   function loadHistory() {
     try { return JSON.parse(localStorage.getItem('xln_history') || '[]'); } catch (e) { return []; }
@@ -753,7 +853,7 @@
     });
     // 底部导航条
     document.body.classList.add('has-nav');
-    const BN = { home: 'home', zhouyi: 'zhouyi', history: 'history', help: 'help' };
+    const BN = { home: 'home', zhouyi: 'zhouyi', bench: 'bench', history: 'history', help: 'help' };
     document.querySelectorAll('.bn-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const target = BN[btn.dataset.bn] || 'home';
@@ -786,7 +886,7 @@
     document.getElementById('view-' + name).classList.add('active');
     document.querySelectorAll('.bn-btn').forEach(b => {
       const bn = b.dataset.bn;
-      b.classList.toggle('active', bn === name || (bn === 'home' && !['home','zhouyi','history','help'].includes(name)));
+      b.classList.toggle('active', bn === name || (bn === 'home' && !['home','zhouyi','bench','history','help'].includes(name)));
     });
     if (name === 'home') { renderDailyGua(); renderHuangli(); }
     else if (name === 'history') renderHistory();
@@ -919,6 +1019,7 @@
     initHistory();
     initPaipanTab();
     initZhouyiTab();
+    initBenchTab();
     initSound();
     renderDailyGua();
     renderHuangli();

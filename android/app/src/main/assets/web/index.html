@@ -112,6 +112,7 @@
     <nav class="bottom-nav" id="bottom-nav">
       <button class="bn-btn active" data-bn="home"><span class="bn-icon">☯</span><span class="bn-label">起卦</span></button>
       <button class="bn-btn" data-bn="zhouyi"><span class="bn-icon">☰</span><span class="bn-label">周易</span></button>
+      <button class="bn-btn" data-bn="bench"><span class="bn-icon">📖</span><span class="bn-label">真题</span></button>
       <button class="bn-btn" data-bn="history"><span class="bn-icon">📜</span><span class="bn-label">历史</span></button>
       <button class="bn-btn" data-bn="help"><span class="bn-icon">❓</span><span class="bn-label">说明</span></button>
     </nav>
@@ -274,6 +275,15 @@
       <div id="zhouyi-list" class="zhouyi-list"></div>
     </section>
 
+    <!-- 命理真题库 -->
+    <section id="view-bench" class="view">
+      <div class="view-head">
+        <button class="btn-back" data-back="home">‹ 返回</button>
+        <h2>命理真题</h2>
+      </div>
+      <div id="bench-root"></div>
+    </section>
+
     <!-- 历史记录页 -->
     <section id="view-history" class="view">
       <div class="view-head">
@@ -295,6 +305,7 @@
   <script src="js/zhouyi.js"></script>
   <script src="js/huangli.js"></script>
   <script src="js/strokes-data.js"></script>
+  <script src="js/bench-data.js"></script>
   <script src="js/sound.js"></script>
   <script src="js/paipan.js"></script>
   <script src="js/palm.js"></script>
