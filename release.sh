@@ -61,8 +61,9 @@ cat > version.json <<EOF
 {
   "versionCode": $NEWCODE,
   "versionName": "$VER",
-  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v$VER/app-release.apk",
+  "apkUrl": "https://xiaoliuren-app.oss-cn-beijing.aliyuncs.com/app-release.bin",
   "ossApkUrl": "https://xiaoliuren-app.oss-cn-beijing.aliyuncs.com/app-release.bin",
+  "githubApkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v$VER/app-release.apk",
   "note": "$NOTE"
 }
 EOF

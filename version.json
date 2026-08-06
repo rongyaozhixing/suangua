@@ -1,7 +1,8 @@
 {
   "versionCode": 122,
   "versionName": "1.2.7",
-  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.2.7/app-release.apk",
+  "apkUrl": "https://xiaoliuren-app.oss-cn-beijing.aliyuncs.com/app-release.bin",
   "ossApkUrl": "https://xiaoliuren-app.oss-cn-beijing.aliyuncs.com/app-release.bin",
-  "note": "①恢复九宫原手掌图（你拍的九宫掌诀照片，之前清理误删，已从 git 找回+原标定坐标）②手机更新修复：新增国内直链下载（APK 传阿里云 OSS 以 .bin 形式，App 优先国内下载，不翻墙也能更新）③六宫保持你的标准掌诀图"
+  "githubApkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.2.7/app-release.apk",
+  "note": "恢复九宫原手掌图 + 国内直链更新（不翻墙可下载）"
 }
