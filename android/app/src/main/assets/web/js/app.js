@@ -448,6 +448,7 @@
       <div class="fortune-hero card">
         <h3 class="quiz-question">你的命 · 概要</h3>
         <p class="fortune-pillars">四柱：${f.pillars.年}　${f.pillars.月}　${f.pillars.日}　${f.pillars.时}</p>
+        <p class="fortune-pillars">年命纳音：${f.pillars.年} · ${f.nayin ? f.nayin.name + '（' + f.nayin.wuxing + '命）' : '—'}</p>
         <p class="fortune-pillars">日主：${f.dayWx}命 · ${f.ws}</p>
         <button class="btn btn--cinnabar" id="f-ai" style="margin-top:12px">✨ AI 深度解读（真题知识）</button>
         <p class="ai-hint">电脑本地版可用大模型按真题命理逻辑深度解读；手机端为离线规则解读</p>

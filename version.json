@@ -1,8 +1,8 @@
 {
-  "versionCode": 127,
-  "versionName": "1.3.4",
+  "versionCode": 128,
+  "versionName": "1.3.5",
   "apkUrl": "https://xiaoliuren-app.oss-cn-beijing.aliyuncs.com/app-release.bin",
   "ossApkUrl": "https://xiaoliuren-app.oss-cn-beijing.aliyuncs.com/app-release.bin",
-  "githubApkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.3.4/app-release.apk",
-  "note": "背景太极水印转速 90s→45s（2 倍速）"
+  "githubApkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.3.5/app-release.apk",
+  "note": "「算我的命」概要卡新增年命纳音五行显示（60 甲子纳音表，如 2006 丙戌→屋上土·土命），与日主五行并列展示，符合传统「X命」说法"
 }

@@ -57,6 +57,26 @@
     return gan + zhi;
   }
 
+  // 六十甲子纳音（按干支序号 0-59）
+  const NAYIN = [
+    '海中金','海中金','炉中火','炉中火','大林木','大林木','路旁土','路旁土','剑锋金','剑锋金',
+    '山头火','山头火','涧下水','涧下水','城头土','城头土','白蜡金','白蜡金','杨柳木','杨柳木',
+    '泉中水','泉中水','屋上土','屋上土','霹雳火','霹雳火','松柏木','松柏木','长流水','长流水',
+    '沙中金','沙中金','山下火','山下火','平地木','平地木','壁上土','壁上土','金箔金','金箔金',
+    '覆灯火','覆灯火','天河水','天河水','大驿土','大驿土','钗钏金','钗钏金','桑柘木','桑柘木',
+    '大溪水','大溪水','沙中土','沙中土','天上火','天上火','石榴木','石榴木','大海水','大海水'
+  ];
+  const GANZHI_IDX = {};
+  for (let i = 0; i < 60; i++) GANZHI_IDX[GAN[i % 10] + ZHI[i % 12]] = i;
+  /** 干支 → 纳音 + 五行 */
+  function nayin(gz) {
+    const idx = GANZHI_IDX[gz];
+    if (idx === undefined) return null;
+    const name = NAYIN[idx];
+    const wx = name.slice(-1);
+    return { name, wuxing: wx };
+  }
+
   /** 八字四柱：返回 {year, month, day, hour} 干支 + 日主五行 + 月令 */
   function bazi(lunar, hourSeq) {
     const yGz = lunar.yearGz || '';
@@ -179,7 +199,12 @@
       text: (ws.level <= 0 && (count['伤官'] || 0) >= 1) ? '身弱伤官见官，行事宜低调，注意口舌与意外磕碰，出行留心。' : '四柱平顺，无大灾大劫之象，唯平时注意安全、积德行善。'
     };
 
-    return { pillars: b.pillars, dayWx: b.dayWx, ws: ws.text, items: CATE.map(c => ({ name: c, ...R[c] })) };
+    const yearNayin = nayin(b.pillars.年);
+    return {
+      pillars: b.pillars, dayWx: b.dayWx, ws: ws.text,
+      nayin: yearNayin,   // 年命纳音（如 2006 丙戌 → 屋上土·土命）
+      items: CATE.map(c => ({ name: c, ...R[c] }))
+    };
   }
 
   function health(b, ws) {
