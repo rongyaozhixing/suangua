@@ -9,6 +9,8 @@
   'use strict';
 
   const NAMES = ['大安', '留连', '速喜', '赤口', '小吉', '空亡']; // seq 1-6
+  // 宫位五行（小六壬体系：大安木/留连土/速喜火/赤口金/小吉水/空亡土；九宫病符土/桃花土/天德金）
+  const WX = { 大安: '木', 留连: '土', 速喜: '火', 赤口: '金', 小吉: '水', 空亡: '土', 病符: '土', 桃花: '土', 天德: '金' };
   // 六宫穴位（palm-user.png 百分比：用户参考图原样（不翻转），按图上宫名标注 OCR 精确定位）
   // 顺序数数：大安(食指根)→留连(食指尖)→速喜(中指尖)→赤口(无名指尖)→小吉(无名指根)→空亡(中指根)
   const POS6 = {
@@ -31,7 +33,7 @@
   function spotsHTML(pos, names) {
     return names.map((n, i) => {
       const [x, y] = pos[n];
-      return `<div class="spot" data-seq="${i + 1}" style="left:${x}%;top:${y}%">
+      return `<div class="spot" data-seq="${i + 1}" data-wx="${WX[n] || ''}" style="left:${x}%;top:${y}%">
         <span class="spot-halo"></span>
         <span class="spot-core"></span>
         <span class="spot-text">${n}</span>

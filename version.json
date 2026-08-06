@@ -1,8 +1,8 @@
 {
-  "versionCode": 125,
-  "versionName": "1.3.2",
+  "versionCode": 126,
+  "versionName": "1.3.3",
   "apkUrl": "https://xiaoliuren-app.oss-cn-beijing.aliyuncs.com/app-release.bin",
   "ossApkUrl": "https://xiaoliuren-app.oss-cn-beijing.aliyuncs.com/app-release.bin",
-  "githubApkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.3.2/app-release.apk",
-  "note": "取消真题浏览；「算我的命」升级：新增 AI 深度解读——本地引擎排准确四柱 + MingLi-Bench 160 真题作为命理判断范例（few-shot）喂给大模型，按真题断法生成 12 类专属解读（电脑本地版可用，手机端为离线规则解读）"
+  "githubApkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.3.3/app-release.apk",
+  "note": "①六宫/九宫宫位显示五行徽章+五行色左边框（大安木/留连土/速喜火/赤口金/小吉水/空亡土/病符土/桃花土/天德金）②掐指穴位点按五行着色（激活时同色光晕，五行流转感）③结果页新增「五行生克」区块（三宫五行链+两两生克+相生相克表）④界面简化：首页入口 6→4 卡，算我的命/周易收进底部导航，命盘排盘并入算我的命页"
 }

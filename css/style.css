@@ -2413,3 +2413,81 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: 0.12em; }
 /* AI 深度解读 */
 .ai-hint { font-size: var(--fs-xs); color: var(--ink-100); margin-top: var(--sp-2); }
 .fortune-ai { border-left: 3px solid var(--gold); }
+
+/* ================================================================
+   五行体系：徽章 / 宫卡着色 / 生克
+   ================================================================ */
+/* 五行色（低饱和国潮） */
+.wx-木 { color: #4c6b52; background: #e3e8d8; border-color: rgba(76,107,82,.35); }
+.wx-火 { color: #a34a38; background: #f0dfd3; border-color: rgba(163,74,56,.35); }
+.wx-土 { color: #96763e; background: #ece2c9; border-color: rgba(150,118,62,.35); }
+.wx-金 { color: #8f7430; background: #eee4c8; border-color: rgba(143,116,48,.35); }
+.wx-水 { color: #46687a; background: #dde4e6; border-color: rgba(70,104,122,.35); }
+
+.wx-badge {
+  display: inline-block;
+  padding: 1px 9px;
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  letter-spacing: 1px;
+  border-radius: var(--r-pill);
+  border: 1px solid transparent;
+  vertical-align: 2px;
+}
+
+/* 宫卡五行色左边框 */
+.gong-card.wx-木 { border-left: 4px solid #6f8f6a; }
+.gong-card.wx-火 { border-left: 4px solid #b0533f; }
+.gong-card.wx-土 { border-left: 4px solid #b39454; }
+.gong-card.wx-金 { border-left: 4px solid #c0a25e; }
+.gong-card.wx-水 { border-left: 4px solid #5a7c8e; }
+
+/* 五行生克区块 */
+.wx-block {
+  display: grid;
+  gap: var(--sp-2);
+  padding: var(--sp-4) var(--sp-5);
+}
+.wx-chain {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-sm);
+  color: var(--ink-700);
+  flex-wrap: wrap;
+}
+.wx-arrow { color: var(--ink-100); font-size: var(--fs-md); }
+.wx-link {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-xs);
+  color: var(--ink-300);
+  flex-wrap: wrap;
+}
+.wx-link .wx-badge { font-size: 10.5px; }
+.wx-rel { color: var(--gold-600); font-weight: 700; }
+
+/* 穴位点五行色（掐指墨点随五行流转） */
+.spot[data-wx="木"] .spot-core { background: #6f8f6a; }
+.spot[data-wx="火"] .spot-core { background: #b0533f; }
+.spot[data-wx="土"] .spot-core { background: #b39454; }
+.spot[data-wx="金"] .spot-core { background: #c0a25e; }
+.spot[data-wx="水"] .spot-core { background: #5a7c8e; }
+.spot[data-wx="木"] .spot-halo { border-color: rgba(111,143,106,.5); }
+.spot[data-wx="火"] .spot-halo { border-color: rgba(176,83,63,.5); }
+.spot[data-wx="土"] .spot-halo { border-color: rgba(179,148,84,.5); }
+.spot[data-wx="金"] .spot-halo { border-color: rgba(192,162,94,.5); }
+.spot[data-wx="水"] .spot-halo { border-color: rgba(90,124,142,.5); }
+.spot.active .spot-core {
+  filter: brightness(1.3) saturate(1.25);
+  box-shadow: 0 0 0 3px rgba(255,255,255,.75), 0 0 14px 2px var(--glow, rgba(0,0,0,.45));
+  transform: scale(1.5);
+  border-color: #fff;
+}
+.spot[data-wx="木"].active .spot-core { --glow: rgba(111,143,106,.85); }
+.spot[data-wx="火"].active .spot-core { --glow: rgba(176,83,63,.85); }
+.spot[data-wx="土"].active .spot-core { --glow: rgba(179,148,84,.85); }
+.spot[data-wx="金"].active .spot-core { --glow: rgba(192,162,94,.85); }
+.spot[data-wx="水"].active .spot-core { --glow: rgba(90,124,142,.85); }
+.spot.active { color: var(--ink-900); }

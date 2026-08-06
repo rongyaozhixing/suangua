@@ -107,9 +107,9 @@
   function gongCard(gong, role, roleDesc) {
     const luckCls = gong.lucky === '吉' ? 'luck-ji' : 'luck-xiong';
     return `
-      <div class="gong-card ${luckCls}">
+      <div class="gong-card ${luckCls} wx-${gong.wuxing}">
         <div class="gong-head">
-          <span class="gong-name">${gong.name}</span>
+          <span class="gong-name">${gong.name}<span class="wx-badge wx-${gong.wuxing}">${gong.wuxing}</span></span>
           <span class="gong-role">${role} · ${roleDesc}</span>
           <span class="gong-luck">${gong.lucky}</span>
         </div>
@@ -122,6 +122,32 @@
           <p class="gong-detail"><b>性情</b>：${gong.xingge}</p>
           <p class="gong-detail"><b>应期</b>：${gong.yingqi}（数字取应期：${gong.num.join('、')}）</p>
         </details>
+      </div>`;
+  }
+
+  /** 五行生克区块：三宫五行链 + 两两生克 */
+  function wuxingBlock(result) {
+    const gs = [result.gongs.month, result.gongs.day, result.gongs.hour].filter(Boolean);
+    if (gs.length < 2) return '';
+    const roles = ['月宫', '日宫', '时宫'];
+    const SHENG = { 木: '火', 火: '土', 土: '金', 金: '水', 水: '木' };
+    const KE = { 木: '土', 土: '水', 水: '火', 火: '金', 金: '木' };
+    const chain = gs.map((g, i) => `
+      <span class="wx-badge wx-${g.wuxing}">${roles[i]}·${g.name}·${g.wuxing}</span>`).join('<span class="wx-arrow">→</span>');
+    const links = [];
+    for (let i = 0; i < gs.length - 1; i++) {
+      const a = gs[i].wuxing, b = gs[i + 1].wuxing;
+      if (SHENG[a] === b) links.push(`<span class="wx-link"><span class="wx-badge wx-${a}">${a}</span><span class="wx-rel">生</span><span class="wx-badge wx-${b}">${b}</span> — ${roles[i]}生${roles[i + 1]}，前者助后者，主${roles[i + 1]}有情帮扶</span>`);
+      else if (KE[a] === b) links.push(`<span class="wx-link"><span class="wx-badge wx-${a}">${a}</span><span class="wx-rel">克</span><span class="wx-badge wx-${b}">${b}</span> — ${roles[i]}克${roles[i + 1]}，前者制约后者，主${roles[i + 1]}受制需留意</span>`);
+      else links.push(`<span class="wx-link"><span class="wx-badge wx-${a}">${a}</span><span class="wx-rel">比和</span><span class="wx-badge wx-${b}">${b}</span> — ${roles[i]}与${roles[i + 1]}五行相同，主平顺稳定</span>`);
+    }
+    return `
+      <div class="section-title">五行生克</div>
+      <div class="card wx-block">
+        <div class="wx-chain">${chain}</div>
+        ${links.join('')}
+        <p class="wx-note" style="font-size:var(--fs-xs);color:var(--ink-100);line-height:1.8">
+        五行相生：木→火→土→金→水→木　|　相克：木→土→水→火→金→木</p>
       </div>`;
   }
 
@@ -259,6 +285,7 @@
       ${huangliAdvice(result, ask)}
       <div class="section-title">三宫细断</div>
       <div class="gong-grid">${cards}</div>
+      ${wuxingBlock(result)}
       ${baguaBlock(result)}
       ${synthesis(result)}
       ${jingjieBlock(result)}
@@ -368,6 +395,7 @@
         </div>
       </div>
       <button class="btn-primary" id="f-submit">解读我的命</button>
+      <button class="btn btn--ghost" id="f-paipan" style="width:100%;margin:10px 0 0">☯ 命盘排盘（本命盘 · 大运流年）</button>
       <div id="fortune-result" class="result"></div>`;
     const ySel = root.querySelector('#f-year'), mSel = root.querySelector('#f-month'), dSel = root.querySelector('#f-day');
     mSel.innerHTML = Array.from({ length: 12 }, (_, i) => `<option value="${i + 1}">${i + 1}月</option>`);
@@ -399,6 +427,9 @@
         const hourSeq = Number(root.querySelector('#f-hour').value);
         renderFortuneResult(lu, hourSeq, gender);
       } catch (e) { alert('日期无效：' + e.message); }
+    });
+    root.querySelector('#f-paipan').addEventListener('click', () => {
+      showView('paipan');
     });
   }
 
@@ -888,7 +919,7 @@
     });
     // 底部导航条
     document.body.classList.add('has-nav');
-    const BN = { home: 'home', zhouyi: 'zhouyi', history: 'history', help: 'help' };
+    const BN = { home: 'home', fortune: 'fortune', zhouyi: 'zhouyi', history: 'history', help: 'help' };
     document.querySelectorAll('.bn-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const target = BN[btn.dataset.bn] || 'home';
@@ -921,7 +952,7 @@
     document.getElementById('view-' + name).classList.add('active');
     document.querySelectorAll('.bn-btn').forEach(b => {
       const bn = b.dataset.bn;
-      b.classList.toggle('active', bn === name || (bn === 'home' && !['home','zhouyi','history','help'].includes(name)));
+      b.classList.toggle('active', bn === name || (bn === 'home' && !['home','fortune','zhouyi','history','help'].includes(name)));
     });
     if (name === 'home') { renderDailyGua(); renderHuangli(); }
     else if (name === 'history') renderHistory();
