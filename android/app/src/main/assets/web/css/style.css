@@ -1,21 +1,79 @@
-/* ===== 小六壬占 · 国潮水墨 UI ===== */
+/* ===== 小六壬占 · 国潮水墨设计系统 =====
+   令牌：色阶 / 字号 / 间距 / 圆角 / 阴影 / 动效 */
 :root {
-  --bg: #f3ecdc;            /* 宣纸黄白 */
-  --bg-soft: #e9e0cc;
-  --card: rgba(255, 253, 248, 0.88);
-  --ink: #1c1a16;           /* 墨黑 */
-  --ink-strong: #111;
-  --ink-dim: #6f6755;       /* 灰褐 */
-  --ink-faint: #a79e88;
-  --line: rgba(28, 26, 22, 0.14);
-  --line-strong: rgba(28, 26, 22, 0.5);
-  --paper: #faf6ec;
-  --ji: #111;
-  --xiong: #8a8578;
-  --cinnabar: #b23a2e;      /* 朱砂 */
-  --cinnabar-soft: rgba(178, 58, 46, 0.12);
-  --gold: #a5854e;          /* 淡金 */
-  --gold-soft: rgba(165, 133, 78, 0.18);
+  /* 色阶 */
+  --paper-0: #fbf7ec;   /* 纸·亮 */
+  --paper-1: #f5efdf;   /* 纸·主 */
+  --paper-2: #ede5cf;   /* 纸·暗 */
+  --paper-3: #e3d9bf;   /* 纸·深 */
+
+  --ink-900: #14120e;   /* 墨·最浓 */
+  --ink-700: #2b2620;   /* 墨·浓 */
+  --ink-500: #4a443a;   /* 墨·中 */
+  --ink-300: #7a7261;   /* 墨·淡 */
+  --ink-100: #a89f8b;   /* 墨·极淡 */
+
+  --cinnabar-600: #9c2f24; /* 朱砂·深 */
+  --cinnabar-500: #b23a2e; /* 朱砂·主 */
+  --cinnabar-100: #f3ddd6; /* 朱砂·浅底 */
+
+  --gold-600: #8a6d3f;  /* 金·深 */
+  --gold-500: #a5854e;  /* 金·主 */
+  --gold-100: #eadfc6;  /* 金·浅底 */
+
+  /* 兼容旧变量 */
+  --bg: var(--paper-1);
+  --bg-soft: var(--paper-2);
+  --card: rgba(255, 253, 248, 0.9);
+  --ink: var(--ink-500);
+  --ink-strong: var(--ink-900);
+  --ink-dim: var(--ink-300);
+  --ink-faint: var(--ink-100);
+  --line: rgba(28, 26, 22, 0.12);
+  --line-strong: rgba(28, 26, 22, 0.45);
+  --paper: var(--paper-0);
+  --ji: var(--ink-900);
+  --xiong: var(--ink-300);
+  --cinnabar: var(--cinnabar-500);
+  --cinnabar-soft: rgba(178, 58, 46, 0.1);
+  --gold: var(--gold-500);
+  --gold-soft: rgba(165, 133, 78, 0.14);
+
+  /* 字号阶梯 */
+  --fs-xs: 11px;
+  --fs-sm: 12.5px;
+  --fs-md: 14px;
+  --fs-lg: 16px;
+  --fs-xl: 19px;
+  --fs-2xl: 24px;
+  --fs-hero: 34px;
+
+  /* 间距 */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+
+  /* 圆角 */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 22px;
+  --r-pill: 999px;
+
+  /* 阴影 */
+  --sh-1: 0 1px 3px rgba(20, 18, 14, 0.08);
+  --sh-2: 0 4px 14px rgba(20, 18, 14, 0.1);
+  --sh-3: 0 10px 30px rgba(20, 18, 14, 0.14);
+
+  /* 动效 */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 0.15s;
+  --dur-mid: 0.3s;
+  --dur-slow: 0.5s;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -1266,3 +1324,747 @@ body::before {
   letter-spacing: 1px;
 }
 .hl-ji-warn { color: var(--cinnabar); font-weight: 600; }
+
+/* ================================================================
+   设计系统 · 组件规范（国潮水墨）
+   ================================================================ */
+
+/* ---- 排版 ---- */
+.kai { font-family: "Kaiti SC", "STKaiti", "KaiTi", "Noto Serif SC", serif; }
+.text-xs { font-size: var(--fs-xs); }
+.text-sm { font-size: var(--fs-sm); }
+.text-md { font-size: var(--fs-md); }
+.text-lg { font-size: var(--fs-lg); }
+.text-xl { font-size: var(--fs-xl); }
+.text-2xl { font-size: var(--fs-2xl); }
+.text-hero { font-size: var(--fs-hero); letter-spacing: 6px; }
+.ink-900 { color: var(--ink-900); }
+.ink-500 { color: var(--ink-500); }
+.ink-300 { color: var(--ink-300); }
+.cinnabar { color: var(--cinnabar); }
+.gold { color: var(--gold); }
+
+/* ---- 卡片变体 ---- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-1);
+}
+.card--gold {
+  border: 1px solid rgba(165, 133, 78, 0.4);
+  box-shadow: 0 2px 10px rgba(165, 133, 78, 0.08);
+}
+.card--cinnabar {
+  border: 1.5px solid rgba(178, 58, 46, 0.4);
+  box-shadow: 0 2px 10px rgba(178, 58, 46, 0.08);
+}
+
+/* ---- 徽章 ---- */
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-radius: var(--r-pill);
+  line-height: 1.7;
+}
+.badge--ji { color: var(--paper-0); background: var(--cinnabar); }
+.badge--ping { color: var(--ink-500); background: var(--paper-2); border: 1px solid var(--line); }
+.badge--xiong { color: var(--paper-0); background: var(--ink-700); }
+.badge--gold { color: var(--gold-600); background: var(--gold-100); }
+
+/* ---- 印章 ---- */
+.chop {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Kaiti SC", "STKaiti", serif;
+  font-weight: 700;
+  color: var(--paper-0);
+  background: var(--cinnabar);
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.3), 0 2px 8px rgba(178, 58, 46, 0.35);
+}
+.chop--lg { width: 52px; height: 52px; font-size: 26px; }
+.chop--md { width: 40px; height: 40px; font-size: 20px; }
+.chop--sm { width: 30px; height: 30px; font-size: 15px; border-radius: 5px; }
+
+/* ---- 细金分割线 ---- */
+.gold-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(165, 133, 78, 0.5), transparent);
+  border: none;
+}
+
+/* ---- 列表条目 ---- */
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: var(--sp-3) var(--sp-4);
+  transition: transform var(--dur-fast) var(--ease-out), border-color var(--dur-fast);
+}
+.list-item:active { transform: scale(0.985); border-color: var(--gold); }
+
+/* ---- 按钮（设计系统基类） ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 11px 20px;
+  font-size: var(--fs-md);
+  font-family: inherit;
+  font-weight: 700;
+  letter-spacing: 2px;
+  border: none;
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast), opacity var(--dur-fast);
+}
+.btn:active { transform: scale(0.96); }
+.btn--cinnabar {
+  color: var(--paper-0);
+  background: linear-gradient(135deg, var(--cinnabar-600), var(--cinnabar-500));
+  box-shadow: 0 4px 14px rgba(178, 58, 46, 0.35);
+}
+.btn--ink {
+  color: var(--paper-0);
+  background: linear-gradient(135deg, var(--ink-900), var(--ink-700));
+  box-shadow: 0 4px 14px rgba(20, 18, 14, 0.3);
+}
+.btn--ghost {
+  color: var(--ink-500);
+  background: transparent;
+  border: 1px solid var(--line-strong);
+}
+.btn--gold {
+  color: var(--gold-600);
+  background: var(--gold-100);
+  box-shadow: inset 0 0 0 1px rgba(165, 133, 78, 0.35);
+}
+.btn[disabled] { opacity: 0.45; pointer-events: none; }
+
+/* ---- 输入 ---- */
+.field {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: var(--fs-lg);
+  font-family: inherit;
+  color: var(--ink-900);
+  background: var(--paper-0);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  outline: none;
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+}
+.field:focus { border-color: var(--cinnabar); box-shadow: 0 0 0 3px var(--cinnabar-soft); }
+
+/* ---- 分段选择器 ---- */
+.seg {
+  display: flex;
+  gap: var(--sp-2);
+  background: var(--paper-2);
+  border-radius: var(--r-pill);
+  padding: 4px;
+}
+.seg button {
+  flex: 1;
+  padding: 9px 10px;
+  font-size: var(--fs-sm);
+  font-family: inherit;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--ink-300);
+  background: transparent;
+  border: none;
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  transition: all var(--dur-mid) var(--ease-out);
+}
+.seg button.active {
+  color: var(--paper-0);
+  background: var(--ink-900);
+  box-shadow: 0 2px 8px rgba(20, 18, 14, 0.3);
+}
+
+/* ================================================================
+   首页重设计
+   ================================================================ */
+
+/* ---- 入口 2 列网格 ---- */
+.method-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+  margin: var(--sp-4) 0;
+}
+.method-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: var(--sp-4);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-1);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  position: relative;
+  transition: transform var(--dur-fast) var(--ease-out), border-color var(--dur-fast), box-shadow var(--dur-fast);
+}
+.method-card::after {
+  content: '';
+  position: absolute;
+  right: var(--sp-3);
+  top: var(--sp-3);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+}
+.method-card:hover { border-color: var(--gold); box-shadow: var(--sh-2); }
+.method-card:active { transform: scale(0.97); }
+.method-card .mc-icon {
+  font-size: 24px;
+  margin-bottom: var(--sp-2);
+}
+.method-card .mc-name {
+  font-size: var(--fs-lg);
+  font-weight: 800;
+  color: var(--ink-900);
+  letter-spacing: 1px;
+}
+.method-card .mc-desc {
+  font-size: var(--fs-xs);
+  color: var(--ink-300);
+  line-height: 1.5;
+  padding-right: 26px;
+}
+
+/* ---- 底部入口行 ---- */
+.link-row {
+  display: flex;
+  gap: var(--sp-3);
+  margin: var(--sp-2) 0 var(--sp-4);
+}
+.link-btn {
+  flex: 1;
+  padding: var(--sp-3);
+  font-size: var(--fs-sm);
+  font-family: inherit;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--ink-500);
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: all var(--dur-fast);
+}
+.link-btn:active { transform: scale(0.97); background: var(--gold-100); }
+
+/* ---- 今日双卡联动 ---- */
+.daily-duo .daily-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-1);
+  margin-bottom: var(--sp-3);
+  overflow: hidden;
+}
+.daily-duo .daily-head {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--ink-500);
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px dashed var(--line);
+}
+.daily-duo .daily-body {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-3) var(--sp-4);
+}
+.daily-duo .daily-info { display: flex; flex-direction: column; gap: var(--sp-1); }
+.daily-duo .daily-name { font-size: var(--fs-xl); font-weight: 800; color: var(--ink-900); }
+.daily-duo .daily-guaci { font-size: var(--fs-sm); color: var(--ink-300); line-height: 1.6; }
+
+/* ---- 底部导航条 ---- */
+.bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  display: flex;
+  background: rgba(250, 246, 236, 0.95);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line);
+  padding: 6px 0 calc(6px + env(safe-area-inset-bottom));
+}
+.bn-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 0;
+  background: none;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+  color: var(--ink-300);
+  transition: color var(--dur-fast);
+}
+.bn-btn .bn-icon { font-size: 19px; line-height: 1; }
+.bn-btn .bn-label { font-size: 10.5px; letter-spacing: 1px; }
+.bn-btn.active { color: var(--cinnabar); }
+.bn-btn.active .bn-icon { transform: scale(1.1); }
+body.has-nav .app-main { padding-bottom: 68px; }
+body.has-nav .app-footer { padding-bottom: 64px; }
+
+/* ================================================================
+   全局字体排版体系（书法标题 / 正文衬线 / 数字）
+   ================================================================ */
+body {
+  font-family: "Songti SC", "SimSun", "Noto Serif SC", "PingFang SC", "Microsoft YaHei", serif;
+  font-size: var(--fs-md);
+  color: var(--ink-500);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* 书法标题族 */
+h1, h2, h3, h4,
+.app-title, .view-head h2, .hero-title, .daily-name,
+.mc-name, .gua-hero-name, .gong-name,
+.zhouyi-name, .pan-title, .home-title {
+  font-family: "Kaiti SC", "STKaiti", "KaiTi", "Noto Serif SC", serif;
+}
+
+/* 数字/卦数：衬线数字，竖直对齐 */
+select, input, .num-big, .pan-liunian,
+.gua-line, .gui-num, .step-num {
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+/* 行高基调 */
+p, li, .gong-detail, .mc-desc, .daily-guaci, .hl-line {
+  line-height: 1.7;
+}
+h1, h2, h3, h4 { line-height: 1.3; }
+
+/* ================================================================
+   掐指区强化（阶段引导 / 进度 / 落宫大字）
+   ================================================================ */
+.palm-steps {
+  display: flex;
+  justify-content: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-2);
+}
+.pstep {
+  min-width: 46px;
+  text-align: center;
+  padding: 3px 10px;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--ink-300);
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  transition: all var(--dur-mid) var(--ease-out);
+}
+.pstep.active {
+  color: var(--paper-0);
+  background: var(--cinnabar);
+  border-color: var(--cinnabar);
+  box-shadow: 0 2px 8px rgba(178, 58, 46, 0.35);
+}
+.palm-progress {
+  height: 3px;
+  margin: var(--sp-2) auto 0;
+  width: 70%;
+  background: var(--paper-2);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+}
+.palm-progress i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--gold), var(--cinnabar));
+  border-radius: var(--r-pill);
+  transition: width 0.4s var(--ease-out);
+}
+.palm-counter.land {
+  font-size: var(--fs-2xl);
+  font-weight: 800;
+  color: var(--cinnabar);
+  font-family: "Kaiti SC", "STKaiti", "Noto Serif SC", serif;
+  letter-spacing: 3px;
+  animation: landPop 0.45s var(--ease-out);
+}
+@keyframes landPop {
+  0% { transform: scale(0.7); opacity: 0; }
+  60% { transform: scale(1.12); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ---- 起卦按钮权重 ---- */
+.view .btn-primary {
+  width: 100%;
+  padding: 14px;
+  font-size: var(--fs-lg);
+  letter-spacing: 6px;
+  margin: var(--sp-4) 0 var(--sp-2);
+  background: linear-gradient(135deg, var(--cinnabar-600), var(--cinnabar-500));
+  color: var(--paper-0);
+  border: none;
+  border-radius: var(--r-pill);
+  font-family: "Kaiti SC", "STKaiti", serif;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 5px 16px rgba(178, 58, 46, 0.32);
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast);
+}
+.view .btn-primary:active { transform: scale(0.97); box-shadow: 0 2px 8px rgba(178, 58, 46, 0.3); }
+
+/* ---- Hero 主视觉 ---- */
+.home-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-5) 0 var(--sp-4);
+}
+.hero-rule { width: 70%; margin-top: var(--sp-3); }
+
+/* ---- 今日双卡联动 · 吉凶徽章化 ---- */
+.hl-jc {
+  padding: 2px 12px;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-xs);
+  letter-spacing: 1px;
+  border: 1px solid transparent;
+}
+.hl-jc.lv-ji { background: var(--cinnabar-100); color: var(--cinnabar-600); border-color: rgba(178,58,46,0.25); }
+.hl-jc.lv-xiong { background: var(--paper-3); color: var(--ink-700); border-color: var(--line); }
+.hl-jc.lv-ping { background: var(--gold-100); color: var(--gold-600); border-color: rgba(165,133,78,0.3); }
+.hl-daygz { color: var(--ink-900); font-weight: 800; }
+.fest-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 8px;
+  font-size: 10.5px;
+  border-radius: var(--r-pill);
+  color: var(--paper-0);
+  background: var(--cinnabar);
+  vertical-align: middle;
+}
+
+/* ---- 步骤化引导条（①所问 ②版本 ③方式） ---- */
+.step-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-4);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--ink-100);
+}
+.step-bar span { white-space: nowrap; transition: color var(--dur-mid); }
+.step-bar span.active { color: var(--cinnabar); font-weight: 800; }
+.step-bar i {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--line-strong), var(--line));
+}
+
+/* ---- 输入区与主按钮权重拉开 ---- */
+.view .field {
+  margin-bottom: var(--sp-3);
+}
+.view .field label {
+  display: block;
+  font-family: "Kaiti SC", "STKaiti", "Noto Serif SC", serif;
+  font-size: var(--fs-md);
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--ink-700);
+  margin-bottom: var(--sp-2);
+}
+.view .field .field,
+.view .field select,
+.view .field input[type="text"],
+.view .field input[type="number"] {
+  min-height: 46px;
+  font-size: var(--fs-lg);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  background: var(--paper-0);
+  color: var(--ink-900);
+  padding: 0 14px;
+  width: 100%;
+  font-family: inherit;
+  outline: none;
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+}
+.view .field select:focus,
+.view .field input:focus {
+  border-color: var(--cinnabar);
+  box-shadow: 0 0 0 3px var(--cinnabar-soft);
+}
+
+/* ================================================================
+   结果页重设计（信息层级）
+   ================================================================ */
+/* 总断：吉=朱砂底 / 凶=墨底 / 平=金底 */
+.summary-card .ovr { font-size: 21px; padding: 3px 14px; letter-spacing: 2px; font-family: "Kaiti SC", "STKaiti", serif; }
+.summary-card .ovr.ovr-ji { background: var(--cinnabar); border-color: var(--cinnabar); color: var(--paper-0); box-shadow: 0 3px 10px rgba(178,58,46,.3); }
+.summary-card .ovr.ovr-xiong { background: var(--ink-700); border-color: var(--ink-700); color: var(--paper-0); }
+.summary-card .ovr:not(.ovr-ji):not(.ovr-xiong) { background: var(--gold-100); border-color: var(--gold); color: var(--gold-600); }
+
+/* 关键断语标识 */
+.ask-card { position: relative; padding-left: 18px; }
+.ask-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 4px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, var(--cinnabar), var(--gold));
+}
+.key-tag {
+  display: inline-block;
+  padding: 2px 9px;
+  margin-right: 8px;
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--paper-0);
+  background: var(--cinnabar);
+  border-radius: var(--r-pill);
+  vertical-align: 2px;
+}
+.ask-card h3 { color: var(--ink-900); }
+
+/* 区块小节标题（宫位详断前） */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin: var(--sp-5) 0 var(--sp-3);
+  font-family: "Kaiti SC", "STKaiti", serif;
+  font-size: var(--fs-lg);
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--ink-900);
+}
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--line-strong), transparent);
+}
+
+/* ---- 卦象区视觉锚点 ---- */
+.gua-hero {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  background: linear-gradient(160deg, var(--paper-0), var(--paper-2));
+  border: 1px solid rgba(165, 133, 78, 0.45);
+  border-radius: var(--r-xl);
+  box-shadow: var(--sh-2);
+  padding: var(--sp-4);
+  margin: var(--sp-4) 0;
+  position: relative;
+  overflow: hidden;
+}
+.gua-hero::after {
+  content: '☯';
+  position: absolute;
+  right: -8px;
+  bottom: -14px;
+  font-size: 64px;
+  color: var(--gold-100);
+  transform: rotate(-15deg);
+}
+.gua-hero-gua svg { filter: drop-shadow(0 3px 6px rgba(20,18,14,.15)); }
+.gua-hero-line1 { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; }
+.gua-hero-sym { font-size: var(--fs-2xl); color: var(--gold-600); }
+.gua-seal { transform: rotate(-6deg); }
+.gua-hero-name { font-size: var(--fs-xl); font-weight: 800; color: var(--ink-900); letter-spacing: 2px; }
+.gua-hero-duan { font-size: var(--fs-sm); color: var(--ink-300); line-height: 1.8; margin-top: var(--sp-1); }
+
+/* ---- 结果页留白与可扫读 ---- */
+.result-wrap > * { margin-bottom: var(--sp-4); }
+.gong-grid {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: 1fr;
+}
+.gong-card {
+  padding: var(--sp-4) var(--sp-5);
+  border-radius: var(--r-lg);
+}
+.synth-card, .extra-card, .help-block, .zhouyi-detail-card, .hist-item {
+  padding: var(--sp-4) var(--sp-5);
+  border-radius: var(--r-lg);
+}
+.gong-more summary { cursor: pointer; color: var(--gold-600); font-weight: 700; }
+
+/* ================================================================
+   次级页统一（周易 / 排盘 / 历史 / 帮助）
+   ================================================================ */
+.view-head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) 0 var(--sp-2);
+  border-bottom: 1px solid var(--line);
+  margin-bottom: var(--sp-4);
+}
+.view-head h2 {
+  font-size: var(--fs-xl);
+  letter-spacing: 3px;
+  color: var(--ink-900);
+}
+.btn-back {
+  padding: 6px 12px;
+  font-size: var(--fs-sm);
+  font-family: inherit;
+  font-weight: 700;
+  color: var(--ink-500);
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  transition: all var(--dur-fast);
+}
+.btn-back:active { transform: scale(0.95); color: var(--cinnabar); border-color: var(--cinnabar); }
+
+/* 周易列表卡片化 */
+.zhouyi-list { display: grid; gap: var(--sp-3); }
+.zhouyi-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: transform var(--dur-fast), border-color var(--dur-fast);
+}
+.zhouyi-item:active { transform: scale(0.985); border-color: var(--gold); }
+.zhouyi-item .zy-sym { font-size: var(--fs-2xl); color: var(--gold-600); width: 34px; text-align: center; }
+.zhouyi-item .zy-name { font-size: var(--fs-md); font-weight: 700; color: var(--ink-900); flex: 1; }
+.zhouyi-item .zy-guaci { font-size: var(--fs-xs); color: var(--ink-300); }
+.zhouyi-detail-card {
+  border: 1px solid rgba(165, 133, 78, 0.4);
+  border-radius: var(--r-lg);
+}
+
+/* 历史记录 */
+.hist-item {
+  border-radius: var(--r-lg);
+  margin-bottom: var(--sp-3);
+}
+.btn-clear-history {
+  width: 100%;
+  padding: 12px;
+  font-size: var(--fs-sm);
+  font-family: inherit;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--ink-300);
+  background: transparent;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  margin-top: var(--sp-2);
+}
+
+/* 排盘表 */
+.paipan-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  box-shadow: var(--sh-1);
+  margin-bottom: var(--sp-4);
+}
+.paipan-table th {
+  background: linear-gradient(160deg, var(--ink-900), var(--ink-700));
+  color: var(--paper-1);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.paipan-table th, .paipan-table td {
+  padding: 10px 8px;
+  font-size: var(--fs-xs);
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+}
+.paipan-table tr:last-child td { border-bottom: none; }
+.pan-title { font-size: var(--fs-lg); margin: var(--sp-4) 0 var(--sp-2); color: var(--ink-900); letter-spacing: 2px; }
+.pan-liunian { font-size: var(--fs-md); color: var(--ink-500); line-height: 1.9; }
+.meta { font-size: var(--fs-xs); color: var(--ink-300); text-align: center; letter-spacing: 1px; margin-bottom: var(--sp-3); }
+
+/* ================================================================
+   动效统一（水墨淡入转场 / 微交互）
+   ================================================================ */
+.view { display: none; }
+.view.active {
+  display: block;
+  animation: viewFade 0.4s var(--ease-out) both;
+}
+@keyframes viewFade {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 卡片统一微交互（收敛：仅轻浮起+描金） */
+.method-card, .gong-card, .zhouyi-item, .hist-item, .daily-card, .summary-card {
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-mid) var(--ease-out), border-color var(--dur-fast);
+}
+.method-card:hover, .gong-card:hover, .zhouyi-item:hover { transform: translateY(-2px); box-shadow: var(--sh-2); }
+
+/* 结果区块逐段浮现（水墨渐显） */
+.result-wrap > * { animation: blockIn 0.5s var(--ease-out) both; }
+.result-wrap > *:nth-child(1) { animation-delay: 0.05s; }
+.result-wrap > *:nth-child(2) { animation-delay: 0.12s; }
+.result-wrap > *:nth-child(3) { animation-delay: 0.19s; }
+.result-wrap > *:nth-child(4) { animation-delay: 0.26s; }
+.result-wrap > *:nth-child(5) { animation-delay: 0.33s; }
+.result-wrap > *:nth-child(n+6) { animation-delay: 0.4s; }
+@keyframes blockIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 声音开关轻反馈 */
+.sound-toggle:active { transform: scale(0.9); }
+.sound-toggle { transition: transform var(--dur-fast); }

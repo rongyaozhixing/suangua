@@ -195,7 +195,7 @@
     }
     return `
       <div class="ask-card">
-        <h3>所问 · ${ask.name}</h3>
+        <h3><span class="key-tag">关键</span>所问 · ${ask.name}</h3>
         ${body || '<p class="ask-note">以三宫吉凶与应期参断。</p>'}
       </div>`;
   }
@@ -255,8 +255,9 @@
     wrap.innerHTML = `
       ${plainSummary(result, ask)}
       ${guaHeroBlock(result)}
-      ${huangliAdvice(result, ask)}
       ${askBlock(ask, result)}
+      ${huangliAdvice(result, ask)}
+      <div class="section-title">三宫细断</div>
       <div class="gong-grid">${cards}</div>
       ${baguaBlock(result)}
       ${synthesis(result)}
@@ -570,11 +571,14 @@
     const h = result.gongs.hour;
     if (!h || !BAGUA_LINK[h.name]) return '';
     const b = BAGUA_LINK[h.name];
+    const luckBadge = h.lucky === '吉' ? '<span class="badge badge--ji">吉</span>'
+      : h.lucky === '凶' ? '<span class="badge badge--xiong">凶</span>'
+      : '<span class="badge badge--ping">平</span>';
     return `
       <div class="gua-hero">
         <div class="gua-hero-gua">${guaSVG(b.bits || '111', 88)}</div>
         <div class="gua-hero-info">
-          <div class="gua-hero-line1"><span class="gua-hero-sym">${b.symbol}</span><span class="gua-hero-name">本卦 · ${b.gua}</span></div>
+          <div class="gua-hero-line1"><span class="gua-hero-sym">${b.symbol}</span><span class="chop chop--sm gua-seal">${b.gua.slice(-1)}</span><span class="gua-hero-name">本卦 · ${b.gua}</span>${luckBadge}</div>
           <p class="gua-hero-duan">${b.duan}</p>
         </div>
       </div>`;
@@ -737,6 +741,25 @@
     document.querySelectorAll('[data-view]').forEach(card => {
       card.addEventListener('click', () => showView(card.dataset.view));
     });
+    // 起卦页步骤引导条（①所问 ②版本 ③方式）
+    ['time', 'num', 'stroke', 'inspire'].forEach(v => {
+      const sec = document.getElementById('view-' + v);
+      if (!sec || sec.querySelector('.step-bar')) return;
+      const bar = document.createElement('div');
+      bar.className = 'step-bar';
+      bar.innerHTML = '<span>① 所问</span><i></i><span>② 版本</span><i></i><span class="active">③ 方式</span>';
+      const head = sec.querySelector('.view-head');
+      if (head) head.after(bar);
+    });
+    // 底部导航条
+    document.body.classList.add('has-nav');
+    const BN = { home: 'home', zhouyi: 'zhouyi', history: 'history', help: 'help' };
+    document.querySelectorAll('.bn-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = BN[btn.dataset.bn] || 'home';
+        showView(target);
+      });
+    });
     // ‹ 返回按钮：走浏览器历史（手机返回键一致地退回上一步）
     document.querySelectorAll('.btn-back').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -761,6 +784,10 @@
     currentView = name;
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.getElementById('view-' + name).classList.add('active');
+    document.querySelectorAll('.bn-btn').forEach(b => {
+      const bn = b.dataset.bn;
+      b.classList.toggle('active', bn === name || (bn === 'home' && !['home','zhouyi','history','help'].includes(name)));
+    });
     if (name === 'home') { renderDailyGua(); renderHuangli(); }
     else if (name === 'history') renderHistory();
     else if (name === 'time' && !timeTouched) refreshTimeNow();   // 进入时间页自动定位当前时刻

@@ -38,12 +38,13 @@
     <!-- 首页：先定所问，再选起卦方式 -->
     <section id="view-home" class="view active">
       <div class="home-hero">
-        <span class="chop">占</span>
+        <span class="chop chop--md">占</span>
         <h2 class="hero-title">心诚则灵 <em>·</em> 一卦知机</h2>
         <p class="hero-sub">掐指一算 · 洞察先机 · 周易参详</p>
+        <hr class="gold-rule hero-rule">
       </div>
-      <div id="daily-gua"></div>
-      <div id="daily-huangli"></div>
+      <div id="daily-gua" class="daily-duo"></div>
+      <div id="daily-huangli" class="daily-duo"></div>
       <div class="field ask-field">
         <label for="ask-select">所问何事（先定所问，再起卦）</label>
         <select id="ask-select"></select>
@@ -56,7 +57,7 @@
         </div>
       </div>
       <p class="view-tip">请选择起卦方式</p>
-      <div class="method-cards">
+      <div class="method-grid">
         <button class="method-card" data-view="time">
           <span class="mc-icon">☀</span>
           <span class="mc-name">时间起卦</span>
@@ -64,7 +65,7 @@
         </button>
         <button class="method-card" data-view="num">
           <span class="mc-icon">🔢</span>
-          <span class="mc-name">报数字起卦</span>
+          <span class="mc-name">报数字</span>
           <span class="mc-desc">随口报 1-3 个数定三宫</span>
         </button>
         <button class="method-card" data-view="stroke">
@@ -84,14 +85,24 @@
         </button>
         <button class="method-card" data-view="zhouyi">
           <span class="mc-icon">☰</span>
-          <span class="mc-name">周易六十四卦</span>
-          <span class="mc-desc">卦辞爻辞 · 全文查询</span>
+          <span class="mc-name">周易卦典</span>
+          <span class="mc-desc">六十四卦全文查询</span>
         </button>
       </div>
-      <button class="btn-history" data-view="history">📜 历史记录</button>
-      <button class="btn-history" data-view="help">❓ 使用说明</button>
+      <div class="link-row">
+        <button class="link-btn" data-view="history">📜 历史记录</button>
+        <button class="link-btn" data-view="help">❓ 使用说明</button>
+      </div>
       <p class="hint center">小六壬仅为民俗参考，不可左右现实抉择。</p>
     </section>
+
+    <!-- 底部导航条 -->
+    <nav class="bottom-nav" id="bottom-nav">
+      <button class="bn-btn active" data-bn="home"><span class="bn-icon">☯</span><span class="bn-label">起卦</span></button>
+      <button class="bn-btn" data-bn="zhouyi"><span class="bn-icon">☰</span><span class="bn-label">周易</span></button>
+      <button class="bn-btn" data-bn="history"><span class="bn-icon">📜</span><span class="bn-label">历史</span></button>
+      <button class="bn-btn" data-bn="help"><span class="bn-icon">❓</span><span class="bn-label">说明</span></button>
+    </nav>
 
     <!-- 时间起卦页 -->
     <section id="view-time" class="view">
@@ -263,7 +274,7 @@
 
   </main>
 
-  <footer class="app-footer">民俗文化参考 · 不引导迷信 · v1.1.5</footer>
+  <footer class="app-footer">民俗文化参考 · 不引导迷信 · v1.2.0</footer>
 
   <div id="update-bar" class="update-bar">发现新版本，点击刷新 ✨</div>
 

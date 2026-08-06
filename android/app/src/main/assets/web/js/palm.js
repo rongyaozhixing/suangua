@@ -61,6 +61,7 @@
 
     container.innerHTML = `
       <div class="palm-wrap">
+        <div class="palm-steps"></div>
         <div class="palm-photo-box">
           <img class="palm-photo" src="${photoSrc}" alt="左手掌诀">
           <div class="spots-layer">${spotsHTML(pos, names)}</div>
@@ -68,10 +69,13 @@
           ${ringsSVG()}
         </div>
         <p class="palm-counter">心存一念 · 从大安起</p>
+        <div class="palm-progress"><i></i></div>
       </div>`;
     const box = container.querySelector('.palm-photo-box');
     const img = container.querySelector('.palm-photo');
     const counter = container.querySelector('.palm-counter');
+    const stepsEl = container.querySelector('.palm-steps');
+    const progEl = container.querySelector('.palm-progress');
     const spots = [...container.querySelectorAll('.spot')];
     const cursor = container.querySelector('.cursor-dot');
 
@@ -132,6 +136,18 @@
       spots.forEach(s => s.classList.remove('active', 'land'));
       cursorShown = false;
       cursor.classList.remove('show');
+      counter.classList.remove('land');
+      // 阶段引导条（月宫 → 日宫 → 时宫）
+      stepsEl.innerHTML = phases.map((p, i) =>
+        `<span class="pstep">${p.label}</span>`).join('');
+      const psteps = [...stepsEl.children];
+      function markStep(i) {
+        psteps.forEach((s, j) => s.classList.toggle('active', j === i));
+      }
+      function setProgress(i) {
+        progEl.querySelector('i').style.width = (phases.length === 1 ? 100 : (i / (phases.length - 1)) * 100) + '%';
+      }
+      setProgress(0);
       setPhaseText('心存一念 · 从大安起');
       // 掐指开始：八卦环加速运转
       const wrap = container.querySelector('.palm-wrap');
@@ -144,6 +160,8 @@
           const ph = phases[idx];
           if (!ph) { finish(); return; }
           setActive(ph.startSeq, false);
+          markStep(idx);
+          setProgress(idx);
           const steps = (ph.count - 1) % (is9 ? 9 : 6);
           const full = ph.count;
           setPhaseText(`${ph.label} · ${ph.display ? ph.display(1) : '1'}`);
@@ -168,6 +186,9 @@
           const last = phases[phases.length - 1];
           const finalSeq = ((last.startSeq + last.count - 2) % (is9 ? 9 : 6)) + 1;
           setActive(finalSeq, true);
+          markStep(phases.length - 1);
+          setProgress(phases.length - 1);
+          counter.classList.add('land');
           setPhaseText(`落于「${names[finalSeq - 1]}」`);
           if (globalThis.Sound) Sound.chime();          // 起卦完成音
           timer = setTimeout(() => {
@@ -183,6 +204,9 @@
           const last = phases[phases.length - 1];
           const finalSeq = ((last.startSeq + last.count - 2) % (is9 ? 9 : 6)) + 1;
           setActive(finalSeq, true);
+          markStep(phases.length - 1);
+          setProgress(phases.length - 1);
+          counter.classList.add('land');
           setPhaseText(`落于「${names[finalSeq - 1]}」`);
           wrap.classList.remove('run');
           resolve();

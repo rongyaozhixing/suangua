@@ -1,8 +1,6 @@
 {
-  "versionCode": 114,
-  "versionName": "1.1.5",
-  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.1.5/app-release.apk",
-  "lanzouUrl": "https://wwbtt.lanzoum.com/iNN4Z40r2llg",
-  "lanzouPwd": "6w7u",
-  "note": "新增今日黄历 + 结果页黄历建议（卦象×黄历组合）"
+  "versionCode": 115,
+  "versionName": "1.2.0",
+  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.2.0/app-release.apk",
+  "note": "国潮水墨全面重设计：设计系统（色阶/排版/组件）/首页（Hero+双卡联动+入口网格+底部导航）/起卦（步骤条+掐指进度+落宫大字）/结果页（总断→卦象→关键→黄历→三宫细断）/次级页统一/动效转场；全量汉字笔画库 27583 字"
 }
