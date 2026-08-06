@@ -10,8 +10,8 @@ android {
         applicationId "com.suangua.xiaoliuren"
         minSdk 21
         targetSdk 34
-        versionCode 115
-        versionName "1.2.0"
+        versionCode 116
+        versionName "1.2.1"
     }
 
     signingConfigs {

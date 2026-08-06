@@ -1,6 +1,6 @@
 {
-  "versionCode": 115,
-  "versionName": "1.2.0",
-  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.2.0/app-release.apk",
-  "note": "国潮水墨全面重设计：设计系统（色阶/排版/组件）/首页（Hero+双卡联动+入口网格+底部导航）/起卦（步骤条+掐指进度+落宫大字）/结果页（总断→卦象→关键→黄历→三宫细断）/次级页统一/动效转场；全量汉字笔画库 27583 字"
+  "versionCode": 116,
+  "versionName": "1.2.1",
+  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.2.1/app-release.apk",
+  "note": "六宫九宫手掌图修复（干净黑白水墨手图+穴位重标定，去除九宫印字）；背景重做（线画八卦环+淡墨太极+远山+水墨晕染，替代生硬文字八卦）；卡片高级质感（描金边/米白渐变/内光）+ 动画增强（入口 staggered 入场/卦画呼吸/按钮光晕/背景缓转）"
 }

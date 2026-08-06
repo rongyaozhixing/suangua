@@ -1157,31 +1157,60 @@ select:focus, input:focus { border-bottom-color: var(--cinnabar); }
   pointer-events: none;
   overflow: hidden;
   z-index: 0;
+  color: var(--ink-900);
 }
-.bg-mystic span {
+
+/* 淡墨晕染（纸感 + 水墨弥散） */
+.bg-wash {
   position: absolute;
-  font-size: 52px;
-  line-height: 1;
-  color: var(--ink);
-  opacity: 0.055;
-  animation: mysticDrift linear infinite;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 45% at 82% -5%, rgba(43, 38, 32, 0.10), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 8% 108%, rgba(43, 38, 32, 0.08), transparent 70%),
+    radial-gradient(ellipse 40% 35% at 50% 55%, rgba(165, 133, 78, 0.05), transparent 75%);
+}
+
+/* 水墨八卦环：细线圆环 + 线画卦符，缓慢旋转 */
+.bg-bagua-ring {
+  position: absolute;
+  width: 56vh;
+  height: 56vh;
+  right: -9vh;
+  top: 4vh;
+  opacity: 0.16;
+  animation: ringSpin 150s linear infinite;
   will-change: transform;
 }
-.bg-mystic span:nth-child(1) { top: 7%;  left: 5%;  animation-duration: 27s; animation-delay: -3s; }
-.bg-mystic span:nth-child(2) { top: 14%; left: 84%; animation-duration: 31s; animation-delay: -9s; }
-.bg-mystic span:nth-child(3) { top: 32%; left: 88%; animation-duration: 24s; animation-delay: -14s; }
-.bg-mystic span:nth-child(4) { top: 46%; left: 3%;  animation-duration: 34s; animation-delay: -6s; }
-.bg-mystic span:nth-child(5) { top: 63%; left: 90%; animation-duration: 29s; animation-delay: -18s; }
-.bg-mystic span:nth-child(6) { top: 78%; left: 6%;  animation-duration: 26s; animation-delay: -11s; }
-.bg-mystic span:nth-child(7) { top: 88%; left: 80%; animation-duration: 33s; animation-delay: -2s; }
-.bg-mystic span:nth-child(8) { top: 55%; left: 46%; animation-duration: 22s; animation-delay: -7s; }
+@keyframes ringSpin { to { transform: rotate(360deg); } }
 
-@keyframes mysticDrift {
-  0%   { transform: translate(0, 0) rotate(0deg); }
-  25%  { transform: translate(26px, -34px) rotate(90deg); }
-  50%  { transform: translate(-18px, -60px) rotate(180deg); }
-  75%  { transform: translate(30px, -20px) rotate(270deg); }
-  100% { transform: translate(0, 0) rotate(360deg); }
+/* 淡墨太极：缓慢旋转 */
+.bg-taiji {
+  position: absolute;
+  width: 34vh;
+  height: 34vh;
+  left: -10vh;
+  bottom: 12vh;
+  opacity: 0.10;
+  animation: taijiSpin 100s linear infinite;
+  will-change: transform;
+}
+@keyframes taijiSpin { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+
+/* 远山淡墨：缓慢漂移 */
+.bg-mountain {
+  position: absolute;
+  left: -6%;
+  right: -6%;
+  bottom: 0;
+  width: 112%;
+  height: 26vh;
+  opacity: 0.10;
+  animation: mountDrift 55s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes mountDrift {
+  from { transform: translateX(-1.2%); }
+  to   { transform: translateX(1.2%); }
 }
 
 /* 星点闪烁 */
@@ -2068,3 +2097,87 @@ h1, h2, h3, h4 { line-height: 1.3; }
 /* 声音开关轻反馈 */
 .sound-toggle:active { transform: scale(0.9); }
 .sound-toggle { transition: transform var(--dur-fast); }
+
+/* ================================================================
+   高级质感 + 动画增强（v1.2.1）
+   ================================================================ */
+
+/* ---- 卡片高级质感：米白渐变 + 描金边 + 内光 ---- */
+.method-card, .daily-card, .gong-card, .summary-card, .ask-card, .zhouyi-item,
+.hist-item, .extra-card, .help-block, .gua-hero {
+  background: linear-gradient(168deg, rgba(255, 253, 248, 0.96), rgba(250, 246, 236, 0.92));
+  border: 1px solid rgba(165, 133, 78, 0.32);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.7) inset,
+    0 2px 12px rgba(20, 18, 14, 0.07);
+}
+.method-card::before, .daily-card::before, .gong-card::before, .summary-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
+}
+.method-card { position: relative; }
+
+/* ---- 星点：金色微光 ---- */
+.m-star { background: var(--gold); box-shadow: 0 0 6px rgba(165, 133, 78, 0.8); }
+
+/* ---- 入口卡 staggered 入场 ---- */
+.method-grid .method-card { animation: cardIn 0.55s var(--ease-out) both; }
+.method-grid .method-card:nth-child(1) { animation-delay: 0.05s; }
+.method-grid .method-card:nth-child(2) { animation-delay: 0.12s; }
+.method-grid .method-card:nth-child(3) { animation-delay: 0.19s; }
+.method-grid .method-card:nth-child(4) { animation-delay: 0.26s; }
+.method-grid .method-card:nth-child(5) { animation-delay: 0.33s; }
+.method-grid .method-card:nth-child(6) { animation-delay: 0.40s; }
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ---- 今日卦卡：卦画呼吸 ---- */
+.daily-duo .daily-body svg { animation: guaBreathe 4s ease-in-out infinite; }
+@keyframes guaBreathe {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.75; }
+}
+
+/* ---- 卦象大卡：卦画 pulse ---- */
+.gua-hero-gua svg { animation: guaPulse 3.2s ease-in-out infinite; }
+@keyframes guaPulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 3px 6px rgba(20,18,14,.15)); }
+  50% { transform: scale(1.04); filter: drop-shadow(0 6px 14px rgba(165,133,78,.4)); }
+}
+
+/* ---- 主按钮：朱砂光晕呼吸 ---- */
+.btn-primary, .btn--cinnabar { animation: btnGlow 3.4s ease-in-out infinite; }
+@keyframes btnGlow {
+  0%, 100% { box-shadow: 0 5px 16px rgba(178, 58, 46, 0.32); }
+  50% { box-shadow: 0 5px 24px rgba(178, 58, 46, 0.55); }
+}
+
+/* ---- 底部导航激活态：微光 ---- */
+.bn-btn.active .bn-icon { text-shadow: 0 0 8px rgba(178, 58, 46, 0.5); }
+
+/* ---- 掐指时整页轻微聚焦（神秘感） ---- */
+.palm-wrap.run ~ .palm-progress i,
+.palm-wrap.run { transition: transform 0.3s; }
+.bg-bagua-ring { transition: opacity 0.6s; }
+.palm-wrap.run ~ * .bg-bagua-ring,
+body:has(.palm-wrap.run) .bg-bagua-ring { opacity: 0.3; }
+
+/* ---- 标题处加水墨分隔 ---- */
+.home-hero .hero-title {
+  background: linear-gradient(180deg, var(--ink-900), var(--ink-500));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 900;
+}
+
+/* 修复渐变标题内分隔符继承透明 */
+.home-hero .hero-title em {
+  -webkit-text-fill-color: var(--cinnabar);
+  background: none;
+}
