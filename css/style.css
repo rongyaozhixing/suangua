@@ -1225,9 +1225,9 @@ body {
   50% { opacity: 0.35; transform: scale(1.4); }
 }
 
-/* 太极水印慢速旋转（神秘感） */
+/* 太极水印慢速旋转（神秘感 · 2 倍速） */
 body::before {
-  animation: taijiSpin 90s linear infinite;
+  animation: taijiSpin 45s linear infinite;
 }
 @keyframes taijiSpin {
   from { transform: translateX(-50%) rotate(0deg); }
