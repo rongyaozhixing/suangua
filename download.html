@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小六壬占 · 下载</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Songti SC", "SimSun", "Noto Serif SC", "PingFang SC", serif;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    background:
+      radial-gradient(ellipse 70% 55% at 78% -8%, rgba(255,252,244,.85), transparent 62%),
+      radial-gradient(ellipse 55% 45% at 6% 112%, rgba(125,139,151,.10), transparent 70%),
+      #f1ede1;
+    color: #37352f;
+    padding: 24px;
+  }
+  .card {
+    max-width: 420px; width: 100%;
+    background: rgba(250,247,240,.55);
+    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+    border: 1px solid rgba(179,154,99,.28);
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(33,31,28,.08);
+    padding: 36px 28px;
+    text-align: center;
+  }
+  .logo {
+    width: 72px; height: 72px; margin: 0 auto 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 38px; font-weight: 700; color: #f7f4ec;
+    background: linear-gradient(150deg, #8a5b39, #a06e48);
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(138,91,57,.35);
+    font-family: "Kaiti SC", serif;
+  }
+  h1 { font-size: 26px; letter-spacing: 6px; font-weight: 600; margin-bottom: 6px; }
+  .sub { font-size: 13px; color: #8b877a; letter-spacing: 2px; margin-bottom: 24px; }
+  .ver {
+    font-size: 12px; color: #98804c; background: #ece2c9;
+    display: inline-block; padding: 3px 12px; border-radius: 999px;
+    margin-bottom: 20px; letter-spacing: 1px;
+  }
+  .btn {
+    display: block; width: 100%;
+    padding: 14px; margin-bottom: 10px;
+    font-size: 16px; font-family: inherit; letter-spacing: 3px; font-weight: 700;
+    border: none; border-radius: 999px; cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+  }
+  .btn:active { transform: scale(.97); }
+  .btn-main {
+    color: #f7f4ec;
+    background: linear-gradient(150deg, #8a5b39, #a06e48);
+    box-shadow: 0 5px 16px rgba(138,91,57,.35);
+  }
+  .btn-sub {
+    color: #55524a; background: #e8e3d4;
+    border: 1px solid rgba(33,31,28,.15);
+  }
+  .tips {
+    margin-top: 18px; text-align: left;
+    font-size: 12px; color: #8b877a; line-height: 1.9;
+    background: #e8e3d4; border-radius: 10px; padding: 12px 14px;
+  }
+  .tips b { color: #55524a; }
+  .foot { margin-top: 16px; font-size: 11px; color: #b6b2a4; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">占</div>
+  <h1>小六壬占</h1>
+  <p class="sub">掐指一算 · 洞察先机</p>
+  <div class="ver">最新版 v1.3.2</div>
+  <button class="btn btn-main" onclick="dl('https://xiaoliuren-app.oss-cn-beijing.aliyuncs.com/apk-download.zip')">📲 下载安装包（国内直连）</button>
+  <button class="btn btn-sub" onclick="dl('https://github.com/rongyaozhixing/suangua/releases/download/v1.3.2/app-release.apk')">🌐 GitHub 下载（需翻墙）</button>
+  <div class="tips">
+    <b>安装方法：</b><br>
+    ① 点「国内直连」下载 <b>apk-download.zip</b><br>
+    ② 解压得到 <b>小六壬占-v1.3.2.apk</b><br>
+    ③ 点击 APK → 允许"安装未知来源应用" → 安装
+  </div>
+  <p class="foot">下载后为压缩包（国内直连），解压即 APK · 后续更新直接在 App 内完成</p>
+</div>
+<script>
+  function dl(url) { location.href = url; }
+</script>
+</body>
+</html>
