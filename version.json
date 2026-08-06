@@ -1,6 +1,6 @@
 {
-  "versionCode": 116,
-  "versionName": "1.2.1",
-  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.2.1/app-release.apk",
-  "note": "六宫九宫手掌图修复（干净黑白水墨手图+穴位重标定，去除九宫印字）；背景重做（线画八卦环+淡墨太极+远山+水墨晕染，替代生硬文字八卦）；卡片高级质感（描金边/米白渐变/内光）+ 动画增强（入口 staggered 入场/卦画呼吸/按钮光晕/背景缓转）"
+  "versionCode": 117,
+  "versionName": "1.2.2",
+  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.2.2/app-release.apk",
+  "note": "Awwwards 新中式极简重构：哑光宣纸底+纸纹噪点+柔和漫射光；赭石/青灰/墨黑低饱和配色（朱砂退场）；云雾粒子漂移+双远山层次；磨砂半透明卡片；纤细排版+大量留白；圆角收窄利落；桌面端 3 列着陆页式布局"
 }

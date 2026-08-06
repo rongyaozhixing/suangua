@@ -1,43 +1,46 @@
 /* ===== 小六壬占 · 国潮水墨设计系统 =====
    令牌：色阶 / 字号 / 间距 / 圆角 / 阴影 / 动效 */
 :root {
-  /* 色阶 */
-  --paper-0: #fbf7ec;   /* 纸·亮 */
-  --paper-1: #f5efdf;   /* 纸·主 */
-  --paper-2: #ede5cf;   /* 纸·暗 */
-  --paper-3: #e3d9bf;   /* 纸·深 */
+  /* ── 色阶 · 哑光宣纸 + 赭石 / 青灰 / 墨黑 ── */
+  --paper-0: #f7f4ec;   /* 宣纸·亮（哑光） */
+  --paper-1: #f1ede1;   /* 宣纸·主 */
+  --paper-2: #e8e3d4;   /* 宣纸·暗 */
+  --paper-3: #ddd7c6;   /* 宣纸·深 */
 
-  --ink-900: #14120e;   /* 墨·最浓 */
-  --ink-700: #2b2620;   /* 墨·浓 */
-  --ink-500: #4a443a;   /* 墨·中 */
-  --ink-300: #7a7261;   /* 墨·淡 */
-  --ink-100: #a89f8b;   /* 墨·极淡 */
+  --ink-900: #211f1c;   /* 墨黑 */
+  --ink-700: #37352f;   /* 墨·浓 */
+  --ink-500: #55524a;   /* 墨·中 */
+  --ink-300: #8b877a;   /* 墨·淡 */
+  --ink-100: #b6b2a4;   /* 墨·极淡 */
 
-  --cinnabar-600: #9c2f24; /* 朱砂·深 */
-  --cinnabar-500: #b23a2e; /* 朱砂·主 */
-  --cinnabar-100: #f3ddd6; /* 朱砂·浅底 */
+  --cinnabar-600: #8a5b39; /* 赭石·深 */
+  --cinnabar-500: #a06e48; /* 赭石·主 */
+  --cinnabar-100: #efe1d2; /* 赭石·浅底 */
 
-  --gold-600: #8a6d3f;  /* 金·深 */
-  --gold-500: #a5854e;  /* 金·主 */
-  --gold-100: #eadfc6;  /* 金·浅底 */
+  --gold-600: #98804c;  /* 细金·深 */
+  --gold-500: #b39a63;  /* 细金·主 */
+  --gold-100: #ece2c9;  /* 细金·浅底 */
+
+  --qingshi: #7d8b97;       /* 青灰 */
+  --qingshi-soft: #e2e6e7;  /* 青灰·浅底 */
 
   /* 兼容旧变量 */
   --bg: var(--paper-1);
   --bg-soft: var(--paper-2);
-  --card: rgba(255, 253, 248, 0.9);
+  --card: rgba(250, 247, 240, 0.55);
   --ink: var(--ink-500);
   --ink-strong: var(--ink-900);
   --ink-dim: var(--ink-300);
   --ink-faint: var(--ink-100);
-  --line: rgba(28, 26, 22, 0.12);
-  --line-strong: rgba(28, 26, 22, 0.45);
+  --line: rgba(33, 31, 28, 0.10);
+  --line-strong: rgba(33, 31, 28, 0.30);
   --paper: var(--paper-0);
   --ji: var(--ink-900);
   --xiong: var(--ink-300);
   --cinnabar: var(--cinnabar-500);
-  --cinnabar-soft: rgba(178, 58, 46, 0.1);
+  --cinnabar-soft: rgba(160, 110, 72, 0.10);
   --gold: var(--gold-500);
-  --gold-soft: rgba(165, 133, 78, 0.14);
+  --gold-soft: rgba(179, 154, 99, 0.14);
 
   /* 字号阶梯 */
   --fs-xs: 11px;
@@ -57,10 +60,10 @@
   --sp-6: 32px;
 
   /* 圆角 */
-  --r-sm: 8px;
-  --r-md: 12px;
-  --r-lg: 16px;
-  --r-xl: 22px;
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 12px;
+  --r-xl: 16px;
   --r-pill: 999px;
 
   /* 阴影 */
@@ -83,7 +86,7 @@ body {
   background:
     radial-gradient(900px 420px at 50% -8%, rgba(28, 26, 22, 0.05) 0%, transparent 62%),
     radial-gradient(420px 300px at 88% 12%, rgba(165, 133, 78, 0.10) 0%, transparent 70%),
-    radial-gradient(380px 300px at 8% 88%, rgba(178, 58, 46, 0.05) 0%, transparent 70%),
+    radial-gradient(380px 300px at 8% 88%, rgba(138, 91, 57, 0.05) 0%, transparent 70%),
     linear-gradient(180deg, #faf4e6 0%, var(--bg) 100%);
   color: var(--ink);
   min-height: 100vh;
@@ -184,7 +187,7 @@ body::before {
   color: var(--paper);
   background: var(--cinnabar);
   border-radius: 6px;
-  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.35), 0 2px 8px rgba(178,58,46,0.4);
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.35), 0 2px 8px rgba(138,91,57,0.4);
   transform: rotate(-6deg);
 }
 .home-hero .hero-title {
@@ -307,7 +310,7 @@ body::before {
   width: 42px; height: 42px;
   display: flex; align-items: center; justify-content: center;
   background: var(--cinnabar-soft);
-  border: 1px solid rgba(178, 58, 46, 0.25);
+  border: 1px solid rgba(138, 91, 57, 0.25);
   border-radius: 12px;
 }
 .mc-name { font-size: 18px; font-weight: 700; letter-spacing: 3px; color: var(--ink-strong); font-family: "Kaiti SC", "STKaiti", "Noto Serif SC", serif; }
@@ -1145,8 +1148,8 @@ select:focus, input:focus { border-bottom-color: var(--cinnabar); }
 /* 掐指落宫高亮强化 */
 .spot.land { animation: landPulse 0.5s ease; }
 @keyframes landPulse {
-  0% { transform: translate(-50%, -50%) scale(0.9); box-shadow: 0 0 0 0 rgba(178, 58, 46, 0.55); }
-  50% { transform: translate(-50%, -50%) scale(1.35); box-shadow: 0 0 0 10px rgba(178, 58, 46, 0); }
+  0% { transform: translate(-50%, -50%) scale(0.9); box-shadow: 0 0 0 0 rgba(138, 91, 57, 0.55); }
+  50% { transform: translate(-50%, -50%) scale(1.35); box-shadow: 0 0 0 10px rgba(138, 91, 57, 0); }
   100% { transform: translate(-50%, -50%) scale(1); }
 }
 
@@ -1160,57 +1163,45 @@ select:focus, input:focus { border-bottom-color: var(--cinnabar); }
   color: var(--ink-900);
 }
 
-/* 淡墨晕染（纸感 + 水墨弥散） */
+/* 哑光宣纸底 + 纸纹噪点 + 柔和漫射光 */
+body {
+  background:
+    radial-gradient(ellipse 70% 55% at 78% -8%, rgba(255, 252, 244, 0.85), transparent 62%),
+    radial-gradient(ellipse 55% 45% at 6% 112%, rgba(125, 139, 151, 0.10), transparent 70%),
+    radial-gradient(ellipse 45% 40% at 55% 60%, rgba(179, 154, 99, 0.05), transparent 72%),
+    var(--paper-1);
+}
 .bg-wash {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse 60% 45% at 82% -5%, rgba(43, 38, 32, 0.10), transparent 70%),
-    radial-gradient(ellipse 50% 40% at 8% 108%, rgba(43, 38, 32, 0.08), transparent 70%),
-    radial-gradient(ellipse 40% 35% at 50% 55%, rgba(165, 133, 78, 0.05), transparent 75%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: 0.028;
 }
 
-/* 水墨八卦环：细线圆环 + 线画卦符，缓慢旋转 */
-.bg-bagua-ring {
+/* 云雾粒子：淡雾团缓慢漂移 */
+.bg-mist {
   position: absolute;
-  width: 56vh;
-  height: 56vh;
-  right: -9vh;
-  top: 4vh;
-  opacity: 0.16;
-  animation: ringSpin 150s linear infinite;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255, 253, 248, 0.75), rgba(255, 253, 248, 0) 70%);
+  filter: blur(26px);
+  opacity: 0.5;
   will-change: transform;
 }
-@keyframes ringSpin { to { transform: rotate(360deg); } }
+.m1 { width: 46vw; height: 30vh; left: -8vw; top: 18vh;  animation: mistA 46s ease-in-out infinite alternate; }
+.m2 { width: 38vw; height: 26vh; right: -6vw; top: 44vh; animation: mistB 54s ease-in-out infinite alternate; }
+.m3 { width: 30vw; height: 22vh; left: 20vw; top: 70vh; animation: mistC 60s ease-in-out infinite alternate; }
+.m4 { width: 34vw; height: 24vh; right: 12vw; top: 6vh;  animation: mistB 42s ease-in-out infinite alternate-reverse; }
+@keyframes mistA { from { transform: translateX(-3vw); } to { transform: translateX(6vw); } }
+@keyframes mistB { from { transform: translateX(4vw) translateY(-2vh); } to { transform: translateX(-5vw) translateY(3vh); } }
+@keyframes mistC { from { transform: translateX(-2vw) translateY(2vh); } to { transform: translateX(5vw) translateY(-3vh); } }
 
-/* 淡墨太极：缓慢旋转 */
-.bg-taiji {
-  position: absolute;
-  width: 34vh;
-  height: 34vh;
-  left: -10vh;
-  bottom: 12vh;
-  opacity: 0.10;
-  animation: taijiSpin 100s linear infinite;
-  will-change: transform;
-}
-@keyframes taijiSpin { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-
-/* 远山淡墨：缓慢漂移 */
-.bg-mountain {
-  position: absolute;
-  left: -6%;
-  right: -6%;
-  bottom: 0;
-  width: 112%;
-  height: 26vh;
-  opacity: 0.10;
-  animation: mountDrift 55s ease-in-out infinite alternate;
-  will-change: transform;
-}
+/* 远山淡墨层次 */
+.bg-mountain { position: absolute; left: -6%; right: -6%; bottom: 0; width: 112%; }
+.bg-mountain.far { height: 30vh; opacity: 0.07; animation: mountDrift 70s ease-in-out infinite alternate; }
+.bg-mountain.near { height: 22vh; opacity: 0.10; animation: mountDrift 50s ease-in-out infinite alternate-reverse; }
 @keyframes mountDrift {
-  from { transform: translateX(-1.2%); }
-  to   { transform: translateX(1.2%); }
+  from { transform: translateX(-1.4%); }
+  to   { transform: translateX(1.4%); }
 }
 
 /* 星点闪烁 */
@@ -1279,7 +1270,7 @@ body::before {
   margin: 10px 0 8px;
   padding: 8px 12px;
   background: var(--cinnabar-soft);
-  border: 1px solid rgba(178, 58, 46, 0.35);
+  border: 1px solid rgba(138, 91, 57, 0.35);
   border-radius: 10px;
   font-size: 14px;
   color: var(--ink-strong);
@@ -1385,8 +1376,8 @@ body::before {
   box-shadow: 0 2px 10px rgba(165, 133, 78, 0.08);
 }
 .card--cinnabar {
-  border: 1.5px solid rgba(178, 58, 46, 0.4);
-  box-shadow: 0 2px 10px rgba(178, 58, 46, 0.08);
+  border: 1.5px solid rgba(138, 91, 57, 0.4);
+  box-shadow: 0 2px 10px rgba(138, 91, 57, 0.08);
 }
 
 /* ---- 徽章 ---- */
@@ -1414,7 +1405,7 @@ body::before {
   color: var(--paper-0);
   background: var(--cinnabar);
   border-radius: 6px;
-  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.3), 0 2px 8px rgba(178, 58, 46, 0.35);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.3), 0 2px 8px rgba(138, 91, 57, 0.35);
 }
 .chop--lg { width: 52px; height: 52px; font-size: 26px; }
 .chop--md { width: 40px; height: 40px; font-size: 20px; }
@@ -1460,7 +1451,7 @@ body::before {
 .btn--cinnabar {
   color: var(--paper-0);
   background: linear-gradient(135deg, var(--cinnabar-600), var(--cinnabar-500));
-  box-shadow: 0 4px 14px rgba(178, 58, 46, 0.35);
+  box-shadow: 0 4px 14px rgba(138, 91, 57, 0.35);
 }
 .btn--ink {
   color: var(--paper-0);
@@ -1724,7 +1715,7 @@ h1, h2, h3, h4 { line-height: 1.3; }
   color: var(--paper-0);
   background: var(--cinnabar);
   border-color: var(--cinnabar);
-  box-shadow: 0 2px 8px rgba(178, 58, 46, 0.35);
+  box-shadow: 0 2px 8px rgba(138, 91, 57, 0.35);
 }
 .palm-progress {
   height: 3px;
@@ -1770,10 +1761,10 @@ h1, h2, h3, h4 { line-height: 1.3; }
   font-family: "Kaiti SC", "STKaiti", serif;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 5px 16px rgba(178, 58, 46, 0.32);
+  box-shadow: 0 5px 16px rgba(138, 91, 57, 0.32);
   transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast);
 }
-.view .btn-primary:active { transform: scale(0.97); box-shadow: 0 2px 8px rgba(178, 58, 46, 0.3); }
+.view .btn-primary:active { transform: scale(0.97); box-shadow: 0 2px 8px rgba(138, 91, 57, 0.3); }
 
 /* ---- Hero 主视觉 ---- */
 .home-hero {
@@ -1793,7 +1784,7 @@ h1, h2, h3, h4 { line-height: 1.3; }
   letter-spacing: 1px;
   border: 1px solid transparent;
 }
-.hl-jc.lv-ji { background: var(--cinnabar-100); color: var(--cinnabar-600); border-color: rgba(178,58,46,0.25); }
+.hl-jc.lv-ji { background: var(--cinnabar-100); color: var(--cinnabar-600); border-color: rgba(138,91,57,0.25); }
 .hl-jc.lv-xiong { background: var(--paper-3); color: var(--ink-700); border-color: var(--line); }
 .hl-jc.lv-ping { background: var(--gold-100); color: var(--gold-600); border-color: rgba(165,133,78,0.3); }
 .hl-daygz { color: var(--ink-900); font-weight: 800; }
@@ -1867,7 +1858,7 @@ h1, h2, h3, h4 { line-height: 1.3; }
    ================================================================ */
 /* 总断：吉=朱砂底 / 凶=墨底 / 平=金底 */
 .summary-card .ovr { font-size: 21px; padding: 3px 14px; letter-spacing: 2px; font-family: "Kaiti SC", "STKaiti", serif; }
-.summary-card .ovr.ovr-ji { background: var(--cinnabar); border-color: var(--cinnabar); color: var(--paper-0); box-shadow: 0 3px 10px rgba(178,58,46,.3); }
+.summary-card .ovr.ovr-ji { background: var(--cinnabar); border-color: var(--cinnabar); color: var(--paper-0); box-shadow: 0 3px 10px rgba(138,91,57,.3); }
 .summary-card .ovr.ovr-xiong { background: var(--ink-700); border-color: var(--ink-700); color: var(--paper-0); }
 .summary-card .ovr:not(.ovr-ji):not(.ovr-xiong) { background: var(--gold-100); border-color: var(--gold); color: var(--gold-600); }
 
@@ -2153,12 +2144,12 @@ h1, h2, h3, h4 { line-height: 1.3; }
 /* ---- 主按钮：朱砂光晕呼吸 ---- */
 .btn-primary, .btn--cinnabar { animation: btnGlow 3.4s ease-in-out infinite; }
 @keyframes btnGlow {
-  0%, 100% { box-shadow: 0 5px 16px rgba(178, 58, 46, 0.32); }
-  50% { box-shadow: 0 5px 24px rgba(178, 58, 46, 0.55); }
+  0%, 100% { box-shadow: 0 5px 16px rgba(138, 91, 57, 0.32); }
+  50% { box-shadow: 0 5px 24px rgba(138, 91, 57, 0.55); }
 }
 
 /* ---- 底部导航激活态：微光 ---- */
-.bn-btn.active .bn-icon { text-shadow: 0 0 8px rgba(178, 58, 46, 0.5); }
+.bn-btn.active .bn-icon { text-shadow: 0 0 8px rgba(138, 91, 57, 0.5); }
 
 /* ---- 掐指时整页轻微聚焦（神秘感） ---- */
 .palm-wrap.run ~ .palm-progress i,
@@ -2181,3 +2172,67 @@ body:has(.palm-wrap.run) .bg-bagua-ring { opacity: 0.3; }
   -webkit-text-fill-color: var(--cinnabar);
   background: none;
 }
+
+/* ================================================================
+   Awwwards 新中式极简（v1.2.2）：磨砂卡 / 留白 / 纤细排版
+   ================================================================ */
+
+/* ---- 磨砂半透明卡片（背板模糊） ---- */
+.method-card, .daily-card, .gong-card, .summary-card, .ask-card, .zhouyi-item,
+.hist-item, .extra-card, .help-block, .gua-hero, .synth-card, .zhouyi-detail-card {
+  background: rgba(250, 247, 240, 0.5);
+  -webkit-backdrop-filter: blur(14px) saturate(0.92);
+  backdrop-filter: blur(14px) saturate(0.92);
+  border: 1px solid rgba(179, 154, 99, 0.22);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.65) inset,
+    0 4px 24px rgba(33, 31, 28, 0.06);
+}
+
+/* ---- 纤细排版：正文更细、标题更疏 ---- */
+body { font-weight: 400; letter-spacing: 0.02em; }
+h1, h2, h3, h4 { font-weight: 600; letter-spacing: 0.12em; }
+.hero-title { letter-spacing: 0.2em; }
+.mc-name, .daily-name, .gua-hero-name { letter-spacing: 0.14em; font-weight: 600; }
+.gong-card, .ask-card, .summary-card, .help-block, .zhouyi-item, .hist-item {
+  padding: var(--sp-5);
+}
+
+/* ---- 更多留白 ---- */
+.app-main { max-width: 1080px; margin: 0 auto; padding: var(--sp-5) var(--sp-5) 88px; }
+.home-hero { padding: var(--sp-6) 0 var(--sp-5); }
+.method-grid { margin: var(--sp-5) 0; gap: var(--sp-4); }
+.link-row { margin-top: var(--sp-4); }
+
+/* ---- 纤细顶栏（桌面） ---- */
+.app-header {
+  background: rgba(241, 237, 225, 0.6);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(179, 154, 99, 0.25);
+}
+.app-header .app-title { font-size: 22px; font-weight: 600; letter-spacing: 0.28em; }
+.app-header .subtitle { font-size: 11px; color: var(--ink-300); letter-spacing: 0.3em; }
+.app-header .gua-line { opacity: 0.6; }
+
+/* ---- 桌面断点：着陆页式留白 ---- */
+@media (min-width: 900px) {
+  .app-main { padding-top: var(--sp-6); }
+  .home-hero { padding: var(--sp-6) 0; }
+  .method-grid { grid-template-columns: repeat(3, 1fr); }
+  .method-card { padding: var(--sp-5); }
+  .gong-grid { grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); }
+  .view-head h2 { font-size: var(--fs-2xl); }
+}
+
+/* ---- 主按钮：磨砂赭石渐变 + 细金描边 ---- */
+.btn-primary, .btn--cinnabar {
+  background: linear-gradient(150deg, var(--cinnabar-600), var(--cinnabar-500));
+  border: 1px solid rgba(179, 154, 99, 0.35);
+  box-shadow: 0 4px 18px rgba(138, 91, 57, 0.28);
+  font-weight: 500;
+}
+.btn-primary:active, .btn--cinnabar:active { box-shadow: 0 2px 10px rgba(138, 91, 57, 0.25); }
+
+/* 确保视口高度时背景元素不遮挡内容 */
+.app-header, .app-main, .app-footer { position: relative; z-index: 1; }
