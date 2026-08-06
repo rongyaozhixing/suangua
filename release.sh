@@ -55,13 +55,14 @@ else
 fi
 rm -f app-release.apk
 
-# 5. version.json → OSS + GitHub + Gitee
-echo "[5/6] 更新 version.json（OSS 检测源）..."
+# 5. version.json → OSS + GitHub + Gitee（含 APK 国内直链 .bin）
+echo "[5/6] 更新 version.json（OSS 检测源）+ 上传 APK 国内直链..."
 cat > version.json <<EOF
 {
   "versionCode": $NEWCODE,
   "versionName": "$VER",
   "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v$VER/app-release.apk",
+  "ossApkUrl": "https://xiaoliuren-app.oss-cn-beijing.aliyuncs.com/app-release.bin",
   "note": "$NOTE"
 }
 EOF
@@ -72,7 +73,10 @@ auth = oss2.Auth(cfg['access_key_id'], cfg['access_key_secret'])
 bucket = oss2.Bucket(auth, cfg['endpoint'], cfg['bucket'])
 with open('version.json', 'rb') as f:
     bucket.put_object('version.json', f, headers={'Content-Type': 'application/json'})
-print('      OSS version.json 上传 OK')
+# APK 国内直链：OSS 禁 .apk 分发，改用 .bin 扩展名（App 下载后按 .apk 文件安装）
+bucket.put_object_from_file('app-release.bin', 'C:/build/xiaoliuren/app/build/outputs/apk/release/app-release.apk',
+                            headers={'Content-Type': 'application/octet-stream'})
+print('      OSS version.json + app-release.bin 上传 OK')
 PYEOF
 
 # 6. 推送 + 桌面交付
