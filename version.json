@@ -1,6 +1,6 @@
 {
-  "versionCode": 117,
-  "versionName": "1.2.2",
-  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.2.2/app-release.apk",
-  "note": "Awwwards 新中式极简重构：哑光宣纸底+纸纹噪点+柔和漫射光；赭石/青灰/墨黑低饱和配色（朱砂退场）；云雾粒子漂移+双远山层次；磨砂半透明卡片；纤细排版+大量留白；圆角收窄利落；桌面端 3 列着陆页式布局"
+  "versionCode": 118,
+  "versionName": "1.2.3",
+  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.2.3/app-release.apk",
+  "note": "六宫九宫穴位坐标修正：左手掌心朝上（拇指在右→食指在右），穴位按像素投影精确校准（大安食指根右/留连食指尖右/速喜中指尖/赤口无名指尖左/小吉无名指根左/空亡中指根）；九宫同镜像修正"
 }
