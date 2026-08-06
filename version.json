@@ -1,6 +1,6 @@
 {
-  "versionCode": 118,
-  "versionName": "1.2.3",
-  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.2.3/app-release.apk",
-  "note": "六宫九宫穴位坐标修正：左手掌心朝上（拇指在右→食指在右），穴位按像素投影精确校准（大安食指根右/留连食指尖右/速喜中指尖/赤口无名指尖左/小吉无名指根左/空亡中指根）；九宫同镜像修正"
+  "versionCode": 119,
+  "versionName": "1.2.4",
+  "apkUrl": "https://github.com/rongyaozhixing/suangua/releases/download/v1.2.4/app-release.apk",
+  "note": "修复 Service Worker 缓存导致的手掌图不显示：BUILD_VER 指纹更新+PRECACHE 改为当前真实文件（含 palm-base.png）+静态资源改网络优先（保证拿到最新版），旧缓存自动清理"
 }
